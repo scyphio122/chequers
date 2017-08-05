@@ -26,10 +26,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     webmanager.cpp \
-    logger.cpp
+    logger.cpp \
+    lock.cpp
 
 HEADERS  += mainwindow.h \
     webmanager.h \
-    logger.h
+    logger.h \
+    lock.h
 
 FORMS    += mainwindow.ui

@@ -4,7 +4,7 @@
 #include <string>
 #include <QThread>
 #include <QMutex>
-
+#include <QByteArray>
 class CWebManager : public QObject
 {
     Q_OBJECT
@@ -17,6 +17,8 @@ public:
 
     int SendData(void* data, int dataSize);
 
+signals:
+    void signalDataAvailable(QByteArray* data, int dataSize);
 
 private:
     CWebManager();
@@ -25,7 +27,11 @@ private:
 
     bool m_connect();
 
+    void m_getDataIfAvailable();
+
     const int M_SERVER_PORT = 8088;
+
+    const int M_RECEIVE_DATA_BUFFER_SIZE = 1024;
 
     std::string m_serverIpAddress;
 
@@ -35,9 +41,9 @@ private:
 
     QThread* m_networkThread;
 
-    QMutex m_sendMutex;
+    QByteArray m_receiveDataArray;
 
-    QMutex m_readMutex;
+    QMutex m_webMutex;
 };
 
 #endif // WEBMANAGER_H
