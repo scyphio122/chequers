@@ -27,11 +27,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     webmanager.cpp \
     logger.cpp \
-    lock.cpp
+    lock.cpp \
+    cgame.cpp \
+    webprotocolframe.cpp
 
 HEADERS  += mainwindow.h \
     webmanager.h \
     logger.h \
-    lock.h
+    lock.h \
+    cgame.h \
+    webprotocolframe.h
 
 FORMS    += mainwindow.ui

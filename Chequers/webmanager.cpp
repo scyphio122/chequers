@@ -4,8 +4,10 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include "lock.h"
+#include <QMutex>
 
-#define NET_MUTEX_LOCK(x) CLock(x)
+
+#define NET_MUTEX_LOCK CLock(m_pWebMutex)
 
 CWebManager::CWebManager()
 {
@@ -16,6 +18,7 @@ CWebManager::CWebManager()
 
     m_isConnected = false;
     m_socketDescriptor = -1;
+    m_pWebMutex = new QMutex();
 
     m_receiveDataArray.resize(M_RECEIVE_DATA_BUFFER_SIZE);
 
@@ -30,7 +33,7 @@ CWebManager* CWebManager::GetInstance()
 
 CWebManager::~CWebManager()
 {
-
+    delete m_pWebMutex;
 }
 
 bool CWebManager::Connect(std::__cxx11::string ip)
@@ -64,7 +67,7 @@ bool CWebManager::Connect(std::__cxx11::string ip)
 
 bool CWebManager::Disconnect()
 {
-    NET_MUTEX_LOCK(&m_webMutex);
+    NET_MUTEX_LOCK;
     LOG_DBG(" ");
     // Close the socket
     close(m_socketDescriptor);
@@ -76,7 +79,7 @@ bool CWebManager::Disconnect()
 
 int CWebManager::SendData(void *data, int dataSize)
 {
-    NET_MUTEX_LOCK(&m_webMutex);
+    NET_MUTEX_LOCK;
     if (!m_isConnected)
     {
         LOG_CRITICAL("Not connected. Returning");
@@ -89,7 +92,7 @@ int CWebManager::SendData(void *data, int dataSize)
 
 void CWebManager::m_getDataIfAvailable()
 {
-    NET_MUTEX_LOCK(&m_webMutex);
+    NET_MUTEX_LOCK;
     int size = recv(m_socketDescriptor, m_receiveDataArray.data(), M_RECEIVE_DATA_BUFFER_SIZE, MSG_DONTWAIT);
 
     if (size == -1)
@@ -115,7 +118,7 @@ bool CWebManager::m_connect()
     server.sin_addr.s_addr = inet_addr(m_serverIpAddress.c_str());
     server.sin_port = htons(M_SERVER_PORT);
 
-    if (connect(m_socketDescriptor, (sockaddr*)&server, sizeof(server)) == -1)
+    if (::connect(m_socketDescriptor, (sockaddr*)&server, sizeof(server)) == -1)
     {
         LOG_CRITICAL("Could not connect to server.");
         return false;

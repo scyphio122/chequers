@@ -51,12 +51,14 @@ OBJECTS_DIR   = ./
 SOURCES       = ../Chequers/main.cpp \
 		../Chequers/mainwindow.cpp \
 		../Chequers/webmanager.cpp \
-		../Chequers/logger.cpp moc_mainwindow.cpp \
+		../Chequers/logger.cpp \
+		../Chequers/lock.cpp moc_mainwindow.cpp \
 		moc_webmanager.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		webmanager.o \
 		logger.o \
+		lock.o \
 		moc_mainwindow.o \
 		moc_webmanager.o
 DIST          = ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
@@ -231,10 +233,12 @@ DIST          = ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/lex.prf \
 		../Chequers/Chequers.pro ../Chequers/mainwindow.h \
 		../Chequers/webmanager.h \
-		../Chequers/logger.h ../Chequers/main.cpp \
+		../Chequers/logger.h \
+		../Chequers/lock.h ../Chequers/main.cpp \
 		../Chequers/mainwindow.cpp \
 		../Chequers/webmanager.cpp \
-		../Chequers/logger.cpp
+		../Chequers/logger.cpp \
+		../Chequers/lock.cpp
 QMAKE_TARGET  = Chequers
 DESTDIR       = 
 TARGET        = Chequers
@@ -610,8 +614,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Chequers/mainwindow.h ../Chequers/webmanager.h ../Chequers/logger.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Chequers/main.cpp ../Chequers/mainwindow.cpp ../Chequers/webmanager.cpp ../Chequers/logger.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Chequers/mainwindow.h ../Chequers/webmanager.h ../Chequers/logger.h ../Chequers/lock.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Chequers/main.cpp ../Chequers/mainwindow.cpp ../Chequers/webmanager.cpp ../Chequers/logger.cpp ../Chequers/lock.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Chequers/mainwindow.ui $(DISTDIR)/
 
 
@@ -806,6 +810,7 @@ moc_webmanager.cpp: ../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QThread \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
 		../Chequers/webmanager.h \
 		moc_predefs.h \
 		../../../IDEs/Qt/5.8/gcc_64/bin/moc
@@ -941,7 +946,12 @@ main.o: ../Chequers/main.cpp ../Chequers/mainwindow.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qeventloop.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qguiapplication.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qinputmethod.h
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qinputmethod.h \
+		../Chequers/webmanager.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QThread \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qthread.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Chequers/main.cpp
 
 mainwindow.o: ../Chequers/mainwindow.cpp ../Chequers/mainwindow.h \
@@ -1141,6 +1151,7 @@ webmanager.o: ../Chequers/webmanager.cpp ../Chequers/webmanager.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
 		../Chequers/logger.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qdebug.h \
@@ -1156,7 +1167,8 @@ webmanager.o: ../Chequers/webmanager.cpp ../Chequers/webmanager.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qset.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../Chequers/lock.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o webmanager.o ../Chequers/webmanager.cpp
 
 logger.o: ../Chequers/logger.cpp ../Chequers/logger.h \
@@ -1225,6 +1237,32 @@ logger.o: ../Chequers/logger.cpp ../Chequers/logger.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QTime \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logger.o ../Chequers/logger.cpp
+
+lock.o: ../Chequers/lock.cpp ../Chequers/lock.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qflags.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qversiontagging.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lock.o ../Chequers/lock.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

@@ -43,7 +43,7 @@ private:
 
     QByteArray m_receiveDataArray;
 
-    QMutex m_webMutex;
+    QMutex* m_pWebMutex;
 };
 
 #endif // WEBMANAGER_H
