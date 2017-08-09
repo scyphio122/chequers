@@ -6,8 +6,9 @@
 #include "lock.h"
 #include <QMutex>
 
+QMutex* CWebManager::s_pWebMutex = nullptr;
 
-#define NET_MUTEX_LOCK CLock(m_pWebMutex)
+#define NET_MUTEX_LOCK CLock(CWebManager::s_pWebMutex)
 
 CWebManager::CWebManager()
 {
@@ -17,8 +18,15 @@ CWebManager::CWebManager()
     connect(this, SIGNAL(destroyed(QObject*)), m_networkThread, SLOT(deleteLater()));
 
     m_isConnected = false;
+    m_serverResponseTimeout = false;
     m_socketDescriptor = -1;
-    m_pWebMutex = new QMutex();
+    s_pWebMutex = new QMutex();
+
+//    m_pReceiveTimer = new QTimer();
+//    m_pReceiveTimer->setInterval(M_RECEIVE_TIMEOUT_MS);
+//    m_pReceiveTimer->setSingleShot(false);
+//    connect(m_pReceiveTimer, SIGNAL(timeout()), this, SLOT(m_getDataIfAvailable()));
+//    m_pReceiveTimer->start();
 
     m_receiveDataArray.resize(M_RECEIVE_DATA_BUFFER_SIZE);
 
@@ -33,7 +41,9 @@ CWebManager* CWebManager::GetInstance()
 
 CWebManager::~CWebManager()
 {
-    delete m_pWebMutex;
+    delete s_pWebMutex;
+    delete m_pReceiveTimer;
+    Disconnect();
 }
 
 bool CWebManager::Connect(std::__cxx11::string ip)
@@ -86,8 +96,51 @@ int CWebManager::SendData(void *data, int dataSize)
         return 0;
     }
 
-   int size = send(m_socketDescriptor, data, dataSize, 0);
+   int size = write(m_socketDescriptor, data, dataSize);//send(m_socketDescriptor, data, dataSize, 0);
    return size;
+}
+
+void CWebManager::ReadDataSynchroneous(QByteArray& response)
+{
+    NET_MUTEX_LOCK;
+
+    int size = recv(m_socketDescriptor, m_receiveDataArray.data(), M_RECEIVE_DATA_BUFFER_SIZE, 0);
+
+    if (size == -1)
+    {
+        if (!(errno == EWOULDBLOCK || errno == EAGAIN))
+        {
+            LOG_ERRNO();
+        }
+        return;
+    }
+
+    response.clear();
+    response.append(m_receiveDataArray);
+}
+
+bool CWebManager::m_startReceiveTimeout()
+{
+    if (m_pReceiveTimer->isActive())
+        return false;
+
+    m_serverResponseTimeout = false;
+    m_pReceiveTimer->setInterval(M_RECEIVE_TIMEOUT_MS);
+    m_pReceiveTimer->setSingleShot(true);
+    m_pReceiveTimer->start();
+
+    return true;
+}
+
+void CWebManager::m_cancelReceiveTimeout()
+{
+    m_pReceiveTimer->stop();
+    m_serverResponseTimeout = false;
+}
+
+void CWebManager::m_receiveTimerTimeoutCallback()
+{
+    m_serverResponseTimeout = true;
 }
 
 void CWebManager::m_getDataIfAvailable()
@@ -97,18 +150,17 @@ void CWebManager::m_getDataIfAvailable()
 
     if (size == -1)
     {
-        if (errno == EWOULDBLOCK || errno == EAGAIN)
-        {
-            return;
-        }
-        else
+        if (!(errno == EWOULDBLOCK || errno == EAGAIN))
         {
             LOG_ERRNO();
         }
+        return;
     }
 
     emit signalDataAvailable(&m_receiveDataArray, size);
 }
+
+
 
 bool CWebManager::m_connect()
 {

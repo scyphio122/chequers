@@ -3,16 +3,19 @@
 
 #include <QObject>
 #include <map>
+#include <QMutex>
 
 class CGame : public QObject
 {
     Q_OBJECT
 public:
-    CGame* GetInstance();
+    ~CGame();
 
-    bool Login(std::string username, unsigned long long int passwordHash);
+    static CGame* GetInstance();
 
-    bool RegisterUser(std::string username, unsigned long long int passwordHash);
+    bool Login(std::string username, std::string password);
+
+    bool RegisterUser(std::string username, std::string password);
 
     bool MakeMove();
 signals:
@@ -53,8 +56,6 @@ private:
 
     static std::map<E_ServerCommands, std::string>s_commandsMap;
 
-    explicit CGame(QObject *parent = 0);
-
     CGame();
 
     std::string m_getCommandString(CGame::E_ServerCommands command);
@@ -65,7 +66,9 @@ private:
 
     char m_board[8][8];
 
-    QThread* m_thread;
+    QThread* m_pThread;
+
+    QMutex* m_pMutex;
 };
 
 #endif // CGAME_H

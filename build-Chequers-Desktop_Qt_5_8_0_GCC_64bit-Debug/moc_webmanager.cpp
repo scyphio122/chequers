@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CWebManager_t {
-    QByteArrayData data[6];
-    char stringdata0[59];
+    QByteArrayData data[8];
+    char stringdata0[110];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,11 +36,15 @@ QT_MOC_LITERAL(1, 12, 19), // "signalDataAvailable"
 QT_MOC_LITERAL(2, 32, 0), // ""
 QT_MOC_LITERAL(3, 33, 11), // "QByteArray*"
 QT_MOC_LITERAL(4, 45, 4), // "data"
-QT_MOC_LITERAL(5, 50, 8) // "dataSize"
+QT_MOC_LITERAL(5, 50, 8), // "dataSize"
+QT_MOC_LITERAL(6, 59, 29), // "m_receiveTimerTimeoutCallback"
+QT_MOC_LITERAL(7, 89, 20) // "m_getDataIfAvailable"
 
     },
     "CWebManager\0signalDataAvailable\0\0"
-    "QByteArray*\0data\0dataSize"
+    "QByteArray*\0data\0dataSize\0"
+    "m_receiveTimerTimeoutCallback\0"
+    "m_getDataIfAvailable"
 };
 #undef QT_MOC_LITERAL
 
@@ -50,7 +54,7 @@ static const uint qt_meta_data_CWebManager[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -58,10 +62,18 @@ static const uint qt_meta_data_CWebManager[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   19,    2, 0x06 /* Public */,
+       1,    2,   29,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+       6,    0,   34,    2, 0x08 /* Private */,
+       7,    0,   35,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::Int,    4,    5,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -73,6 +85,8 @@ void CWebManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->signalDataAvailable((*reinterpret_cast< QByteArray*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 1: _t->m_receiveTimerTimeoutCallback(); break;
+        case 2: _t->m_getDataIfAvailable(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -113,13 +127,13 @@ int CWebManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 3)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 1;
+        _id -= 3;
     }
     return _id;
 }

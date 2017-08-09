@@ -5,6 +5,8 @@
 #include <QThread>
 #include <QMutex>
 #include <QByteArray>
+#include <QTimer>
+
 class CWebManager : public QObject
 {
     Q_OBJECT
@@ -17,6 +19,10 @@ public:
 
     int SendData(void* data, int dataSize);
 
+    void ReadDataSynchroneous(QByteArray& response);
+
+    static QMutex* s_pWebMutex;
+
 signals:
     void signalDataAvailable(QByteArray* data, int dataSize);
 
@@ -27,11 +33,17 @@ private:
 
     bool m_connect();
 
-    void m_getDataIfAvailable();
 
-    const int M_SERVER_PORT = 8088;
+
+    bool m_startReceiveTimeout();
+
+    void m_cancelReceiveTimeout();
+
+    const int M_SERVER_PORT = 4000;
 
     const int M_RECEIVE_DATA_BUFFER_SIZE = 1024;
+
+    const int M_RECEIVE_TIMEOUT_MS = 400;
 
     std::string m_serverIpAddress;
 
@@ -43,7 +55,14 @@ private:
 
     QByteArray m_receiveDataArray;
 
-    QMutex* m_pWebMutex;
+    QTimer* m_pReceiveTimer;
+
+    bool m_serverResponseTimeout;
+
+private slots:
+    void m_receiveTimerTimeoutCallback();
+
+    void m_getDataIfAvailable();
 };
 
 #endif // WEBMANAGER_H

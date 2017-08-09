@@ -1,9 +1,9 @@
 #include "lock.h"
 
-CLock::CLock()
-{
+//CLock::CLock()
+//{
 
-}
+//}
 
 CLock::CLock(QMutex* mutex)
 {

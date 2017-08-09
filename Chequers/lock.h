@@ -6,10 +6,10 @@
 class CLock
 {
 public:
-    CLock();
     CLock(QMutex* mutex);
     ~CLock();
 private:
+    CLock();
     QMutex* m_pMutex;
 };
 
