@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CWebManager_t {
-    QByteArrayData data[8];
-    char stringdata0[110];
+    QByteArrayData data[6];
+    char stringdata0[89];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,15 +34,12 @@ static const qt_meta_stringdata_CWebManager_t qt_meta_stringdata_CWebManager = {
 QT_MOC_LITERAL(0, 0, 11), // "CWebManager"
 QT_MOC_LITERAL(1, 12, 19), // "signalDataAvailable"
 QT_MOC_LITERAL(2, 32, 0), // ""
-QT_MOC_LITERAL(3, 33, 11), // "QByteArray*"
-QT_MOC_LITERAL(4, 45, 4), // "data"
-QT_MOC_LITERAL(5, 50, 8), // "dataSize"
-QT_MOC_LITERAL(6, 59, 29), // "m_receiveTimerTimeoutCallback"
-QT_MOC_LITERAL(7, 89, 20) // "m_getDataIfAvailable"
+QT_MOC_LITERAL(3, 33, 4), // "data"
+QT_MOC_LITERAL(4, 38, 29), // "m_receiveTimerTimeoutCallback"
+QT_MOC_LITERAL(5, 68, 20) // "m_getDataIfAvailable"
 
     },
-    "CWebManager\0signalDataAvailable\0\0"
-    "QByteArray*\0data\0dataSize\0"
+    "CWebManager\0signalDataAvailable\0\0data\0"
     "m_receiveTimerTimeoutCallback\0"
     "m_getDataIfAvailable"
 };
@@ -62,14 +59,14 @@ static const uint qt_meta_data_CWebManager[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   29,    2, 0x06 /* Public */,
+       1,    1,   29,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    0,   34,    2, 0x08 /* Private */,
-       7,    0,   35,    2, 0x08 /* Private */,
+       4,    0,   32,    2, 0x08 /* Private */,
+       5,    0,   33,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3, QMetaType::Int,    4,    5,
+    QMetaType::Void, QMetaType::QByteArray,    3,
 
  // slots: parameters
     QMetaType::Void,
@@ -84,8 +81,7 @@ void CWebManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         CWebManager *_t = static_cast<CWebManager *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->signalDataAvailable((*reinterpret_cast< QByteArray*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 1: _t->m_receiveTimerTimeoutCallback(); break;
+        case 0: _t->signalDataAvailable((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
         case 2: _t->m_getDataIfAvailable(); break;
         default: ;
         }
@@ -93,7 +89,7 @@ void CWebManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (CWebManager::*_t)(QByteArray * , int );
+            typedef void (CWebManager::*_t)(QByteArray );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CWebManager::signalDataAvailable)) {
                 *result = 0;
                 return;
@@ -139,9 +135,9 @@ int CWebManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CWebManager::signalDataAvailable(QByteArray * _t1, int _t2)
+void CWebManager::signalDataAvailable(QByteArray _t1)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

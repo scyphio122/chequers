@@ -1,4 +1,4 @@
-#ifndef WEBMANAGER_H
+﻿#ifndef WEBMANAGER_H
 #define WEBMANAGER_H
 
 #include <string>
@@ -24,7 +24,7 @@ public:
     static QMutex* s_pWebMutex;
 
 signals:
-    void signalDataAvailable(QByteArray* data, int dataSize);
+    void signalDataAvailable(QByteArray data);
 
 private:
     CWebManager();
@@ -33,15 +33,13 @@ private:
 
     bool m_connect();
 
+    bool m_startCyclicReceiveCheck();
 
-
-    bool m_startReceiveTimeout();
-
-    void m_cancelReceiveTimeout();
+    void m_cancelCyclicReceiveCheck();
 
     const int M_SERVER_PORT = 4000;
 
-    const int M_RECEIVE_DATA_BUFFER_SIZE = 1024;
+    static const int M_RECEIVE_DATA_BUFFER_SIZE = 1024;
 
     const int M_RECEIVE_TIMEOUT_MS = 400;
 
@@ -53,11 +51,11 @@ private:
 
     QThread* m_networkThread;
 
-    QByteArray m_receiveDataArray;
-
     QTimer* m_pReceiveTimer;
 
     bool m_serverResponseTimeout;
+
+    char m_receiveBuf[M_RECEIVE_DATA_BUFFER_SIZE];
 
 private slots:
     void m_receiveTimerTimeoutCallback();

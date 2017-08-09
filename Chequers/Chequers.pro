@@ -29,13 +29,15 @@ SOURCES += main.cpp\
     logger.cpp \
     lock.cpp \
     webprotocolframe.cpp \
-    game.cpp
+    game.cpp \
+    protocolframeparser.cpp
 
 HEADERS  += mainwindow.h \
     webmanager.h \
     logger.h \
     lock.h \
     webprotocolframe.h \
-    game.h
+    game.h \
+    protocolframeparser.h
 
 FORMS    += mainwindow.ui
