@@ -16,19 +16,19 @@ CWebManager::CWebManager()
     this->moveToThread(m_networkThread);
 
     connect(this, SIGNAL(destroyed(QObject*)), m_networkThread, SLOT(deleteLater()));
+    m_networkThread->start();
 
     m_isConnected = false;
     m_serverResponseTimeout = false;
     m_socketDescriptor = -1;
     s_pWebMutex = new QMutex();
 
-//    m_pReceiveTimer = new QTimer();
-//    m_pReceiveTimer->setInterval(M_RECEIVE_TIMEOUT_MS);
-//    m_pReceiveTimer->setSingleShot(false);
-//    connect(m_pReceiveTimer, SIGNAL(timeout()), this, SLOT(m_getDataIfAvailable()));
-//    m_pReceiveTimer->start();
-
-    m_networkThread->start();
+    m_pReceiveTimer = new QTimer();
+    m_pReceiveTimer->setInterval(M_RECEIVE_TIMEOUT_MS);
+    m_pReceiveTimer->setSingleShot(false);
+    m_pReceiveTimer->setParent(this);
+    connect(m_pReceiveTimer, SIGNAL(timeout()), this, SLOT(m_getDataIfAvailable()));
+    m_pReceiveTimer->start();
 }
 
 CWebManager* CWebManager::GetInstance()
@@ -127,6 +127,7 @@ void CWebManager::ReadDataSynchroneous(QByteArray& response)
         response.append(buf);
 
     }while (size != 0);
+
 }
 
 bool CWebManager::m_startCyclicReceiveCheck()
@@ -163,13 +164,14 @@ void CWebManager::m_getDataIfAvailable()
             if (!(errno == EWOULDBLOCK || errno == EAGAIN))
             {
                 LOG_ERRNO();
+                return;
             }
-            return;
+            break;
         }
 
         if (size == 0)
         {
-            return;
+           break;
         }
 
         receivedData.append(m_receiveBuf, size);

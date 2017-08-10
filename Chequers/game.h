@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QMutex>
 #include "webprotocolframe.h"
+#include "protocolframeparser.h"
+
 
 class CGame : public QObject
 {
@@ -43,6 +45,8 @@ private:
     E_GameState m_state;
 
     E_SideColor m_userColor;
+
+    CProtocolFrameParser* m_pParser;
 
     char m_board[8][8];
 

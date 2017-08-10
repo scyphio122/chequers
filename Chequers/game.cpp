@@ -8,6 +8,8 @@ CGame::CGame()
 {
     m_userColor = E_SideColor::E_INVALID;
     m_state = E_GameState::E_NOT_INITIALIZED;
+    m_pParser = CProtocolFrameParser::GetInstance();
+    connect(CWebManager::GetInstance(), SIGNAL(signalDataAvailable(QByteArray)), m_pParser, SLOT(Parse(QByteArray)));
 
     m_pThread = new QThread();
     m_pMutex = new QMutex(QMutex::Recursive);
@@ -39,7 +41,7 @@ bool CGame::Login(std::string username, std::string password)
 
     CWebManager* webMan = CWebManager::GetInstance();
     webMan->SendData(frame.GetRawFrame(), frame.GetFrameSize());
-    webMan->ReadDataSynchroneous(serverResponse);
+//    webMan->ReadDataSynchroneous(serverResponse);
 
     return true;
 }
@@ -54,7 +56,7 @@ bool CGame::RegisterUser(std::string username, std::string password)
 
     CWebManager* webMan = CWebManager::GetInstance();
     webMan->SendData(frame.GetRawFrame(), frame.GetFrameSize());
-    webMan->ReadDataSynchroneous(serverResponse);
+//    webMan->ReadDataSynchroneous(serverResponse);
 
     return true;
 }

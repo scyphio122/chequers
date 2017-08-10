@@ -41,7 +41,7 @@ private:
 
     static const int M_RECEIVE_DATA_BUFFER_SIZE = 1024;
 
-    const int M_RECEIVE_TIMEOUT_MS = 400;
+    const int M_RECEIVE_TIMEOUT_MS = 100;
 
     std::string m_serverIpAddress;
 
@@ -58,8 +58,6 @@ private:
     char m_receiveBuf[M_RECEIVE_DATA_BUFFER_SIZE];
 
 private slots:
-    void m_receiveTimerTimeoutCallback();
-
     void m_getDataIfAvailable();
 };
 
