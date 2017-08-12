@@ -21,7 +21,7 @@ public:
         E_BOARD = 8,
         E_YOUR_MOVE = 9,
         E_RESIGN = 10,
-        E_END_GAME = 11,
+        E_GAME_ENDED = 11,
         E_LOGOUT = 12,
         E_ERROR = 13,
         E_INCONSISTENCY = 14

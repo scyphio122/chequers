@@ -3,6 +3,7 @@
 #include <QByteArray>
 #include "webprotocolframe.h"
 #include "logger.h"
+#include "player.h"
 
 CProtocolFrameParser::CProtocolFrameParser()
 {
@@ -67,12 +68,12 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
     {
         case CWebProtocolFrame::E_ServerCommands::E_LOGIN:
             {
-                if (!params.empty())
+                if (params.size() == 1)
                 {
                     int loginSuccess = params[0].toUShort();
                     LOG_DBG("Login %s", loginSuccess? "success" : "fail");
 
-                    emit signalLoginRetval((bool)loginSuccess);
+                    emit signalLoginRetval(loginSuccess);
                 }
                 else
                 {
@@ -82,7 +83,7 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
 
         case CWebProtocolFrame::E_ServerCommands::E_REGISTER_USER:
             {
-                if (!params.empty())
+                if (params.size() == 1)
                 {
                     int registerSuccess = params[0].toUShort();
                     LOG_DBG("Register %s", registerSuccess? "success" : "fail");
@@ -96,43 +97,78 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
             }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_BOARD:
-        {
+            {
+                if (params.size() == 1)
+                {
+                    char board[8][8];
+                    memcpy(board, params[0].data(), sizeof(board));
+                    emit signalBoardReceived(board);
+                }
+                else
+                {
+                    LOG_FATAL("Wrong number of parameters");
+                }
+            }break;
 
-        }break;
-
-        case CWebProtocolFrame::E_ServerCommands::E_END_GAME:
-        {
-
-        }break;
-
-        case CWebProtocolFrame::E_ServerCommands::E_ERROR:
-        {
-
-        }break;
+        case CWebProtocolFrame::E_ServerCommands::E_GAME_ENDED:
+            {
+                if (params.size() == 2)
+                {
+                    emit signalGameEnded(params[0].toStdString(), params[1].toStdString());
+                }
+                else
+                {
+                    LOG_FATAL("Wrong number of parameters");
+                }
+            }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_GAME_INITIALIZATION:
-        {
+            {
+                if (params.size() == 1)
+                {
+                    char playerColor = static_cast<char>(params[0].toInt());
 
-        }break;
+                    emit signalGameInitialization(playerColor);
+                }
+                else
+                {
+                    LOG_FATAL("Wrong number of parameters");
+                }
+            }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_GET_PLAYERS_LIST:
-        {
+            {
+                QList<CPlayer> playersList;
+                LOG_DBG("Number of players available ond server: %d", params.size());
+                for (int i=0; i< params.size(); i+=2)
+                {
+                    playersList.append(CPlayer(params[i].toStdString(), params[i+1].toStdString()));
+                }
 
-        }break;
+                emit signalListOfPlayersReceived(playersList);
+            }break;
+
 
         case CWebProtocolFrame::E_ServerCommands::E_INCONSISTENCY:
-        {
-
-        }break;
+            {
+                if (params.size() == 1)
+                {
+                    LOG_FATAL("Error inconsistency: %s", params[0].toStdString());
+                }
+                else
+                {
+                    LOG_FATAL("Wrong number of parameters");
+                }
+            }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_LOGOUT:
-        {
-
-        }break;
+            {
+                LOG_WARNING("UNEXPECTED FRAME TYPE");
+            }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_NEW_GAME_REQUESTED:
             {
-                if (!params.empty())
+                if (params.size() == 1)
                 {
                     std::string newGamePlayerName = params[0].toStdString();
                     LOG_DBG("PLayer: '%s' has requested new game", newGamePlayerName.c_str());
@@ -146,28 +182,49 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
             }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_NEW_GAME_REQUEST_RESPONSE:
-        {
-
-        }break;
+            {
+                LOG_WARNING("UNEXPECTED FRAME TYPE");
+            }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_RESIGN:
-        {
-
-        }break;
+            {
+                LOG_WARNING("UNEXPECTED FRAME TYPE");
+            }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_START_NEW_GAME:
-        {
-
-        }break;
+            {
+                if (params.size() == 1)
+                {
+                    int requestStatus = params[0].toInt();
+                    LOG_DBG("Response from server to starting new game: %s", requestStatus? "Request passed to player" : "Player does not exist");
+                    emit signalNewGameRequestPassed(requestStatus);
+                }
+                else
+                {
+                    LOG_FATAL("Wrong number of parameters");
+                }
+            }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_YOUR_MOVE:
-        {
+            {
 
+            }break;
+
+        case CWebProtocolFrame::E_ServerCommands::E_ERROR:
+        {
+            if (params.size() == 1)
+            {
+                LOG_FATAL("Error command: %s", params[0].toStdString());
+            }
+            else
+            {
+                LOG_FATAL("Wrong number of parameters");
+            }
         }break;
 
         default:
         {
-
+            LOG_CRITICAL("Unknown command. Returning...");
         }break;
     }
 }

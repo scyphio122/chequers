@@ -17,7 +17,7 @@ std::map<CWebProtocolFrame::E_ServerCommands, std::string>CWebProtocolFrame::s_c
     {CWebProtocolFrame::E_ServerCommands::E_BOARD, "CHB"},
     {CWebProtocolFrame::E_ServerCommands::E_YOUR_MOVE, "YMV"},
     {CWebProtocolFrame::E_ServerCommands::E_RESIGN, "GVU"},
-    {CWebProtocolFrame::E_ServerCommands::E_END_GAME, "EOG"},
+    {CWebProtocolFrame::E_ServerCommands::E_GAME_ENDED, "EOG"},
     {CWebProtocolFrame::E_ServerCommands::E_LOGOUT, "LGO"},
     {CWebProtocolFrame::E_ServerCommands::E_ERROR, "ERR"},
     {CWebProtocolFrame::E_ServerCommands::E_INCONSISTENCY, "ERS"},
@@ -28,7 +28,7 @@ CWebProtocolFrame::CWebProtocolFrame()
     m_frame.clear();
 }
 
-void CWebProtocolFrame::FormFrame(std::string commandString, std::string params = "")
+void CWebProtocolFrame::FormFrame(std::string commandString, std::string params = std::string())
 {
     m_setCommand(commandString);
     if (!params.empty())

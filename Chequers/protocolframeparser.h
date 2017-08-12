@@ -5,6 +5,8 @@
 #include <QList>
 #include <QByteArray>
 #include "webprotocolframe.h"
+#include "player.h"
+
 
 class CProtocolFrameParser : public QObject
 {
@@ -17,9 +19,17 @@ signals:
 
     void signalRegisterRetval(bool success);
 
-    void signalListOfPlayersReceived(QList<QByteArray> playersList);
+    void signalListOfPlayersReceived(QList<CPlayer> playersList);
 
-    void signalNewGameRequested(std::string playerName);
+    void signalNewGameRequestPassed(int result);
+
+    void signalNewGameRequested(std::string hostPlayerName);
+
+    void signalBoardReceived(char board[8][8]);
+
+    void signalGameEnded(std::string result, std::string reason);
+
+    void signalGameInitialization(char playerColor);
 
 public slots:
     void Parse(QByteArray receivedData);

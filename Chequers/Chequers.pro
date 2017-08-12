@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     lock.cpp \
     webprotocolframe.cpp \
     game.cpp \
-    protocolframeparser.cpp
+    protocolframeparser.cpp \
+    player.cpp
 
 HEADERS  += mainwindow.h \
     webmanager.h \
@@ -38,6 +39,7 @@ HEADERS  += mainwindow.h \
     lock.h \
     webprotocolframe.h \
     game.h \
-    protocolframeparser.h
+    protocolframeparser.h \
+    player.h
 
 FORMS    += mainwindow.ui
