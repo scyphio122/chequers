@@ -4,6 +4,10 @@
 #include <QDialog>
 #include "mainwindow.h"
 #include "registeruserform.h"
+#include <QPixmap>
+#include "mainwindow.h"
+
+class MainWindow;
 
 namespace Ui {
 class CLoginForm;
@@ -43,6 +47,8 @@ private:
     MainWindow* m_pMainwindow;
 
     CRegisterUserForm* m_pRegisterUserForm;
+
+    QPixmap* m_userAvatarPixmap;
 };
 
 #endif // LOGINFORM_H

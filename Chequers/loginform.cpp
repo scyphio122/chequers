@@ -13,6 +13,12 @@ CLoginForm::CLoginForm(QWidget *parent) :
     ui->setupUi(this);
 
     this->setWindowTitle("Login");
+
+    m_userAvatarPixmap = new QPixmap("Login_avatar.png");
+    ui->lB_userAvatar->setPixmap(*m_userAvatarPixmap);
+    ui->lB_userAvatar->setScaledContents( true );
+    ui->lB_userAvatar->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalLoginRetval(bool)), this, SLOT(onLoginResponse(bool)));
 
     ui->pB_login->clearFocus();
@@ -21,6 +27,7 @@ CLoginForm::CLoginForm(QWidget *parent) :
 
 CLoginForm::~CLoginForm()
 {
+    delete m_userAvatarPixmap;
     delete ui;
 }
 

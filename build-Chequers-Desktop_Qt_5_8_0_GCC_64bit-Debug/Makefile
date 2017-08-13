@@ -58,12 +58,14 @@ SOURCES       = ../Chequers/main.cpp \
 		../Chequers/protocolframeparser.cpp \
 		../Chequers/player.cpp \
 		../Chequers/loginform.cpp \
-		../Chequers/registeruserform.cpp moc_mainwindow.cpp \
+		../Chequers/registeruserform.cpp \
+		../Chequers/gamerequestpopup.cpp moc_mainwindow.cpp \
 		moc_webmanager.cpp \
 		moc_game.cpp \
 		moc_protocolframeparser.cpp \
 		moc_loginform.cpp \
-		moc_registeruserform.cpp
+		moc_registeruserform.cpp \
+		moc_gamerequestpopup.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		webmanager.o \
@@ -75,12 +77,14 @@ OBJECTS       = main.o \
 		player.o \
 		loginform.o \
 		registeruserform.o \
+		gamerequestpopup.o \
 		moc_mainwindow.o \
 		moc_webmanager.o \
 		moc_game.o \
 		moc_protocolframeparser.o \
 		moc_loginform.o \
-		moc_registeruserform.o
+		moc_registeruserform.o \
+		moc_gamerequestpopup.o
 DIST          = ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../IDEs/Qt/5.8/gcc_64/mkspecs/common/unix.conf \
 		../../../IDEs/Qt/5.8/gcc_64/mkspecs/common/linux.conf \
@@ -260,7 +264,8 @@ DIST          = ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../Chequers/protocolframeparser.h \
 		../Chequers/player.h \
 		../Chequers/loginform.h \
-		../Chequers/registeruserform.h ../Chequers/main.cpp \
+		../Chequers/registeruserform.h \
+		../Chequers/gamerequestpopup.h ../Chequers/main.cpp \
 		../Chequers/mainwindow.cpp \
 		../Chequers/webmanager.cpp \
 		../Chequers/logger.cpp \
@@ -270,7 +275,8 @@ DIST          = ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../Chequers/protocolframeparser.cpp \
 		../Chequers/player.cpp \
 		../Chequers/loginform.cpp \
-		../Chequers/registeruserform.cpp
+		../Chequers/registeruserform.cpp \
+		../Chequers/gamerequestpopup.cpp
 QMAKE_TARGET  = Chequers
 DESTDIR       = 
 TARGET        = Chequers
@@ -279,7 +285,7 @@ TARGET        = Chequers
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_loginform.h ui_registeruserform.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_loginform.h ui_registeruserform.h ui_gamerequestpopup.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../Chequers/Chequers.pro ../../../IDEs/Qt/5.8/gcc_64/mkspecs/linux-g++/qmake.conf ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
@@ -646,9 +652,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Chequers/mainwindow.h ../Chequers/webmanager.h ../Chequers/logger.h ../Chequers/lock.h ../Chequers/webprotocolframe.h ../Chequers/game.h ../Chequers/protocolframeparser.h ../Chequers/player.h ../Chequers/loginform.h ../Chequers/registeruserform.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Chequers/main.cpp ../Chequers/mainwindow.cpp ../Chequers/webmanager.cpp ../Chequers/logger.cpp ../Chequers/lock.cpp ../Chequers/webprotocolframe.cpp ../Chequers/game.cpp ../Chequers/protocolframeparser.cpp ../Chequers/player.cpp ../Chequers/loginform.cpp ../Chequers/registeruserform.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Chequers/mainwindow.ui ../Chequers/loginform.ui ../Chequers/registeruserform.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Chequers/mainwindow.h ../Chequers/webmanager.h ../Chequers/logger.h ../Chequers/lock.h ../Chequers/webprotocolframe.h ../Chequers/game.h ../Chequers/protocolframeparser.h ../Chequers/player.h ../Chequers/loginform.h ../Chequers/registeruserform.h ../Chequers/gamerequestpopup.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Chequers/main.cpp ../Chequers/mainwindow.cpp ../Chequers/webmanager.cpp ../Chequers/logger.cpp ../Chequers/lock.cpp ../Chequers/webprotocolframe.cpp ../Chequers/game.cpp ../Chequers/protocolframeparser.cpp ../Chequers/player.cpp ../Chequers/loginform.cpp ../Chequers/registeruserform.cpp ../Chequers/gamerequestpopup.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Chequers/mainwindow.ui ../Chequers/loginform.ui ../Chequers/registeruserform.ui ../Chequers/gamerequestpopup.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -680,9 +686,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h ../../../IDEs/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_webmanager.cpp moc_game.cpp moc_protocolframeparser.cpp moc_loginform.cpp moc_registeruserform.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_webmanager.cpp moc_game.cpp moc_protocolframeparser.cpp moc_loginform.cpp moc_registeruserform.cpp moc_gamerequestpopup.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_webmanager.cpp moc_game.cpp moc_protocolframeparser.cpp moc_loginform.cpp moc_registeruserform.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_webmanager.cpp moc_game.cpp moc_protocolframeparser.cpp moc_loginform.cpp moc_registeruserform.cpp moc_gamerequestpopup.cpp
 moc_mainwindow.cpp: ../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QMainWindow \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -787,6 +793,20 @@ moc_mainwindow.cpp: ../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QMainWindow \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QList \
+		../Chequers/player.h \
+		../Chequers/loginform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdialog.h \
+		../Chequers/mainwindow.h \
+		../Chequers/game.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../Chequers/webprotocolframe.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
+		../Chequers/protocolframeparser.h \
+		../Chequers/registeruserform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QPixmap \
 		../Chequers/mainwindow.h \
 		moc_predefs.h \
 		../../../IDEs/Qt/5.8/gcc_64/bin/moc
@@ -1136,7 +1156,17 @@ moc_loginform.cpp: ../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QList \
+		../Chequers/player.h \
+		../Chequers/loginform.h \
 		../Chequers/registeruserform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QPixmap \
+		../Chequers/game.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../Chequers/webprotocolframe.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
+		../Chequers/protocolframeparser.h \
 		../Chequers/loginform.h \
 		moc_predefs.h \
 		../../../IDEs/Qt/5.8/gcc_64/bin/moc
@@ -1249,11 +1279,118 @@ moc_registeruserform.cpp: ../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QDialog 
 		../../../IDEs/Qt/5.8/gcc_64/bin/moc
 	/home/konrad/IDEs/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/konrad/IDEs/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/konrad/Qt_Workspace/Chequers/Chequers -I/home/konrad/IDEs/Qt/5.8/gcc_64/include -I/home/konrad/IDEs/Qt/5.8/gcc_64/include/QtWidgets -I/home/konrad/IDEs/Qt/5.8/gcc_64/include/QtGui -I/home/konrad/IDEs/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Chequers/registeruserform.h -o moc_registeruserform.cpp
 
+moc_gamerequestpopup.cpp: ../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdialog.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qflags.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qwidget.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qstring.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qchar.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qlist.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qpair.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qrect.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsize.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpalette.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qcolor.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qrgb.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qbrush.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qvector.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qmatrix.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpolygon.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qregion.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qline.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtransform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpainterpath.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qimage.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpixelformat.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpixmap.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qhash.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qfont.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qfontinfo.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qcursor.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qkeysequence.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qevent.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmap.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qset.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qurl.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qurlquery.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qfile.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qvector2d.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h \
+		../Chequers/gamerequestpopup.h \
+		moc_predefs.h \
+		../../../IDEs/Qt/5.8/gcc_64/bin/moc
+	/home/konrad/IDEs/Qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/konrad/IDEs/Qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/konrad/Qt_Workspace/Chequers/Chequers -I/home/konrad/IDEs/Qt/5.8/gcc_64/include -I/home/konrad/IDEs/Qt/5.8/gcc_64/include/QtWidgets -I/home/konrad/IDEs/Qt/5.8/gcc_64/include/QtGui -I/home/konrad/IDEs/Qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../Chequers/gamerequestpopup.h -o moc_gamerequestpopup.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_loginform.h ui_registeruserform.h
+compiler_uic_make_all: ui_mainwindow.h ui_loginform.h ui_registeruserform.h ui_gamerequestpopup.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_loginform.h ui_registeruserform.h
+	-$(DEL_FILE) ui_mainwindow.h ui_loginform.h ui_registeruserform.h ui_gamerequestpopup.h
 ui_mainwindow.h: ../Chequers/mainwindow.ui \
 		../../../IDEs/Qt/5.8/gcc_64/bin/uic
 	/home/konrad/IDEs/Qt/5.8/gcc_64/bin/uic ../Chequers/mainwindow.ui -o ui_mainwindow.h
@@ -1265,6 +1402,10 @@ ui_loginform.h: ../Chequers/loginform.ui \
 ui_registeruserform.h: ../Chequers/registeruserform.ui \
 		../../../IDEs/Qt/5.8/gcc_64/bin/uic
 	/home/konrad/IDEs/Qt/5.8/gcc_64/bin/uic ../Chequers/registeruserform.ui -o ui_registeruserform.h
+
+ui_gamerequestpopup.h: ../Chequers/gamerequestpopup.ui \
+		../../../IDEs/Qt/5.8/gcc_64/bin/uic
+	/home/konrad/IDEs/Qt/5.8/gcc_64/bin/uic ../Chequers/gamerequestpopup.ui -o ui_gamerequestpopup.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -1381,6 +1522,19 @@ main.o: ../Chequers/main.cpp ../Chequers/mainwindow.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QList \
+		../Chequers/player.h \
+		../Chequers/loginform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdialog.h \
+		../Chequers/registeruserform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QPixmap \
+		../Chequers/game.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../Chequers/webprotocolframe.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
+		../Chequers/protocolframeparser.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qapplication.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1391,21 +1545,11 @@ main.o: ../Chequers/main.cpp ../Chequers/mainwindow.h \
 		../Chequers/webmanager.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QThread \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qthread.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QTimer \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtimer.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qbasictimer.h \
-		../Chequers/game.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QObject \
-		../Chequers/webprotocolframe.h \
-		../Chequers/protocolframeparser.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QList \
-		../Chequers/player.h \
-		../Chequers/loginform.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdialog.h \
-		../Chequers/registeruserform.h
+		../Chequers/logger.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Chequers/main.cpp
 
 mainwindow.o: ../Chequers/mainwindow.cpp ../Chequers/mainwindow.h \
@@ -1513,22 +1657,22 @@ mainwindow.o: ../Chequers/mainwindow.cpp ../Chequers/mainwindow.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qicon.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QList \
+		../Chequers/player.h \
+		../Chequers/loginform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdialog.h \
+		../Chequers/registeruserform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QPixmap \
+		../Chequers/game.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../Chequers/webprotocolframe.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
+		../Chequers/protocolframeparser.h \
 		ui_mainwindow.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QVariant \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QAction \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qaction.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qactiongroup.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qapplication.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcoreapplication.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qeventloop.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qguiapplication.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qinputmethod.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QButtonGroup \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qbuttongroup.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QHeaderView \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QTableView \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtableview.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qabstractitemview.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qabstractscrollarea.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
@@ -1544,14 +1688,11 @@ mainwindow.o: ../Chequers/mainwindow.cpp ../Chequers/mainwindow.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qstyle.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtabbar.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qrubberband.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QMenuBar \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qmenubar.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qmenu.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QStatusBar \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qstatusbar.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QToolBar \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtoolbar.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QWidget
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QMessageBox \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qmessagebox.h \
+		../Chequers/logger.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QDebug \
+		../Chequers/gamerequestpopup.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Chequers/mainwindow.cpp
 
 webmanager.o: ../Chequers/webmanager.cpp ../Chequers/webmanager.h \
@@ -2101,16 +2242,17 @@ loginform.o: ../Chequers/loginform.cpp ../Chequers/loginform.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qicon.h \
-		../Chequers/registeruserform.h \
-		ui_loginform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QList \
+		../Chequers/player.h \
 		../Chequers/game.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QObject \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
 		../Chequers/webprotocolframe.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
 		../Chequers/protocolframeparser.h \
-		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QList \
-		../Chequers/player.h \
+		../Chequers/registeruserform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QPixmap \
+		ui_loginform.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QMessageBox \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o loginform.o ../Chequers/loginform.cpp
@@ -2231,6 +2373,120 @@ registeruserform.o: ../Chequers/registeruserform.cpp ../Chequers/registeruserfor
 		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o registeruserform.o ../Chequers/registeruserform.cpp
 
+gamerequestpopup.o: ../Chequers/gamerequestpopup.cpp ../Chequers/gamerequestpopup.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QDialog \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdialog.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qglobal.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qconfig.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qlogging.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qflags.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmutex.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qwidget.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qstring.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qchar.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qlist.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qpair.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qregexp.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qrect.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsize.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpalette.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qcolor.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qrgb.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qrgba64.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qbrush.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qvector.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qmatrix.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpolygon.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qregion.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qline.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtransform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpainterpath.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qimage.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpixelformat.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpixmap.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qhash.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qfont.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qfontinfo.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qcursor.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qkeysequence.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qevent.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qvariant.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qmap.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qlocale.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qset.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qurl.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qurlquery.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qfile.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qvector2d.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h \
+		ui_gamerequestpopup.h \
+		../Chequers/game.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QMutex \
+		../Chequers/webprotocolframe.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QByteArray \
+		../Chequers/protocolframeparser.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QList \
+		../Chequers/player.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamerequestpopup.o ../Chequers/gamerequestpopup.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
@@ -2248,6 +2504,9 @@ moc_loginform.o: moc_loginform.cpp
 
 moc_registeruserform.o: moc_registeruserform.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_registeruserform.o moc_registeruserform.cpp
+
+moc_gamerequestpopup.o: moc_gamerequestpopup.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gamerequestpopup.o moc_gamerequestpopup.cpp
 
 ####### Install
 

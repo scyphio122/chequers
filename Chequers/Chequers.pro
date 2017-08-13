@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     protocolframeparser.cpp \
     player.cpp \
     loginform.cpp \
-    registeruserform.cpp
+    registeruserform.cpp \
+    gamerequestpopup.cpp
 
 HEADERS  += mainwindow.h \
     webmanager.h \
@@ -44,8 +45,10 @@ HEADERS  += mainwindow.h \
     protocolframeparser.h \
     player.h \
     loginform.h \
-    registeruserform.h
+    registeruserform.h \
+    gamerequestpopup.h
 
 FORMS    += mainwindow.ui \
     loginform.ui \
-    registeruserform.ui
+    registeruserform.ui \
+    gamerequestpopup.ui

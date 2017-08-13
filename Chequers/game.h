@@ -42,6 +42,8 @@ public:
 
     char* GetBoard();
 
+    std::string GetUserName();
+
     /* GAME API */
 
     bool Login(std::string username, std::string password);
@@ -52,6 +54,8 @@ public:
 
     bool StartNewGame(std::string secondPlayerName);
 
+    bool RespondToGameInvitation(bool accept);
+
     bool MakeMove();
 
     bool Logout();
@@ -59,9 +63,11 @@ public:
     bool Resign();
 
 signals:
-    void signalStateChanged(E_GameState newState);
+    void signalStateChanged(CGame::E_GameState newState);
 
     void signalRedrawBoard();
+
+    void signalLogout();
 
 public slots:
     void onLoginResponse(bool response);
@@ -101,6 +107,8 @@ private:
     QList<CPlayer> m_playersList;
 
     bool m_loggedIn;
+
+    std::string m_userName;
 
     CProtocolFrameParser* m_pParser;
 

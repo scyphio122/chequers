@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <string>
+#include <map>
 
 class CPlayer
 {
@@ -21,9 +22,13 @@ public:
 
     E_PlayerStatus GetStatus();
 
+    std::string GetStatusString();
+
 private:
     std::string m_playerName;
     E_PlayerStatus m_status;
+
+    static std::map<E_PlayerStatus, std::string> s_statusMap;
 };
 
 #endif // PLAYER_H

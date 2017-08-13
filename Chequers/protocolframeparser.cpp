@@ -60,7 +60,7 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
 
     std::string cmd = frame.GetCommand().toStdString();
     QList<QByteArray> params = frame.GetParameters();
-    LOG_DBG("CMD: %s, paramsSize: %d", cmd, params.size());
+    LOG_DBG("CMD: %s, paramsSize: %d", cmd.c_str(), params.size());
 
     CWebProtocolFrame::E_ServerCommands commandEnum = CWebProtocolFrame::GetCommandFromMap(cmd);
 

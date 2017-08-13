@@ -1,4 +1,12 @@
 #include "player.h"
+#include <map>
+
+std::map<CPlayer::E_PlayerStatus, std::string> CPlayer::s_statusMap =
+{
+    {CPlayer::E_PlayerStatus::E_INVALID, "Invalid state"},
+    {CPlayer::E_PlayerStatus::E_OCCUPIED, "Player occupied"},
+    {CPlayer::E_PlayerStatus::E_WAITING_FOR_PLAY, "Ready to play"}
+};
 
 CPlayer::CPlayer()
 {
@@ -19,4 +27,9 @@ std::string CPlayer::GetPlayerName()
 CPlayer::E_PlayerStatus CPlayer::GetStatus()
 {
     return m_status;
+}
+
+std::string CPlayer::GetStatusString()
+{
+    return s_statusMap[GetStatus()];
 }

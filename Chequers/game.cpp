@@ -21,6 +21,7 @@ CGame::CGame()
     m_state = E_GameState::E_NOT_INITIALIZED;
 
     m_pParser = CProtocolFrameParser::GetInstance();
+
     connect(m_pParser, SIGNAL(signalLoginRetval(bool)), this, SLOT(onLoginResponse(bool)));
     connect(m_pParser, SIGNAL(signalRegisterRetval(bool)), this, SLOT(onUserRegistrationResponse(bool)));
     connect(m_pParser, SIGNAL(signalListOfPlayersReceived(QList<CPlayer>)), this, SLOT(onGetPlayersListResponse(QList<CPlayer>)));
@@ -28,7 +29,7 @@ CGame::CGame()
     connect(m_pParser, SIGNAL(signalNewGameRequestResponse(int)), this, SLOT(onNewGameRequestPlayerResponse(int)));
     connect(m_pParser, SIGNAL(signalNewGameRequested(std::string)), this, SLOT(onNewGameRequested(std::string)));
     connect(m_pParser, SIGNAL(signalGameInitialization(char)), this, SLOT(onGameInitialization(char)));
-    connect(m_pParser, SIGNAL(signalBoardReceived(char[][])), this, SLOT(onBoardReceived(char[][])));
+    connect(m_pParser, SIGNAL(signalBoardReceived(char[8][8])), this, SLOT(onBoardReceived(char[8][8])));
     connect(m_pParser, SIGNAL(signalYourMove(bool)), this, SLOT(onYourMove(bool)));
     connect(m_pParser, SIGNAL(signalGameEnded(std::string,std::string)), this, SLOT(onGameEnded(std::string,std::string)));
 
@@ -58,6 +59,10 @@ char* CGame::GetBoard()
     return &m_board[0][0];
 }
 
+std::string CGame::GetUserName()
+{
+    return m_userName;
+}
 /*
  *  ###############################################
  *   ################  GAME API  ###################
@@ -72,10 +77,10 @@ bool CGame::Login(std::string username, std::string password)
         return false;
     }
 
-    QByteArray serverResponse;
     CWebProtocolFrame frame;
     std::string params = username + "#" + password;
 
+    m_userName = username;
     frame.FormFrame(CWebProtocolFrame::E_ServerCommands::E_LOGIN, params);
 
     return m_SendFrame(frame);
@@ -125,6 +130,36 @@ bool CGame::StartNewGame(std::string secondPlayerName)
     return m_SendFrame(frame);
 }
 
+bool CGame::RespondToGameInvitation(bool accept)
+{
+    CWebProtocolFrame frame;
+    std::string param;
+
+    if (accept)
+    {
+        param = "1";
+    }
+    else
+    {
+        param = "0";
+    }
+
+    frame.FormFrame(CWebProtocolFrame::E_ServerCommands::E_NEW_GAME_REQUEST_RESPONSE, param);
+
+    bool retval = m_SendFrame(frame);
+
+    if (retval)
+    {
+        m_changeState(E_GameState::E_GAME_REQUEST);
+    }
+    else
+    {
+        m_changeState(E_GameState::E_LOGGED_IN);
+    }
+
+    return retval;
+}
+
 bool CGame::Logout()
 {
     if (m_state != E_GameState::E_WAITING_FOR_ACCEPT && m_state != E_GameState::E_LOGGED_IN)
@@ -140,7 +175,9 @@ bool CGame::Logout()
     if (retval)
     {
         m_loggedIn = false;
+        m_userName = "";
         m_changeState(E_GameState::E_NOT_INITIALIZED);
+        emit signalLogout();
     }
 
     return retval;
@@ -173,9 +210,11 @@ void CGame::onLoginResponse(bool response)
     {
         m_loggedIn = true;
         m_changeState(E_GameState::E_LOGGED_IN);
+        GetPlayersList();
     }
     else
     {
+        m_userName = "";
         m_loggedIn = false;
         m_changeState(E_GameState::E_NOT_INITIALIZED);
     }
@@ -241,6 +280,7 @@ void CGame::onGameEnded(std::__cxx11::string result, std::__cxx11::string reason
 {
     LOG_DBG("Game has ended. You %s! Reason for game end is %s", result.c_str(), reason.c_str());
     m_changeState(E_GameState::E_LOGGED_IN);
+    GetPlayersList();
 }
 
 

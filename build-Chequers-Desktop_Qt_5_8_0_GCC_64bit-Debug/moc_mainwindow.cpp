@@ -9,6 +9,7 @@
 #include "../Chequers/mainwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QList>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -21,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[1];
-    char stringdata0[11];
+    QByteArrayData data[26];
+    char stringdata0[396];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,10 +32,45 @@ struct qt_meta_stringdata_MainWindow_t {
     )
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
-QT_MOC_LITERAL(0, 0, 10) // "MainWindow"
+QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
+QT_MOC_LITERAL(1, 11, 24), // "onGetPlayersListResponse"
+QT_MOC_LITERAL(2, 36, 0), // ""
+QT_MOC_LITERAL(3, 37, 14), // "QList<CPlayer>"
+QT_MOC_LITERAL(4, 52, 16), // "availablePlayers"
+QT_MOC_LITERAL(5, 69, 28), // "onStartNewGameServerResponse"
+QT_MOC_LITERAL(6, 98, 6), // "result"
+QT_MOC_LITERAL(7, 105, 18), // "onNewGameRequested"
+QT_MOC_LITERAL(8, 124, 11), // "std::string"
+QT_MOC_LITERAL(9, 136, 14), // "hostPlayerName"
+QT_MOC_LITERAL(10, 151, 30), // "onNewGameRequestPlayerResponse"
+QT_MOC_LITERAL(11, 182, 8), // "response"
+QT_MOC_LITERAL(12, 191, 20), // "onGameInitialization"
+QT_MOC_LITERAL(13, 212, 11), // "playerColor"
+QT_MOC_LITERAL(14, 224, 15), // "onBoardReceived"
+QT_MOC_LITERAL(15, 240, 10), // "char[8][8]"
+QT_MOC_LITERAL(16, 251, 5), // "board"
+QT_MOC_LITERAL(17, 257, 11), // "onGameEnded"
+QT_MOC_LITERAL(18, 269, 6), // "reason"
+QT_MOC_LITERAL(19, 276, 8), // "onLogout"
+QT_MOC_LITERAL(20, 285, 18), // "onGameStateChanged"
+QT_MOC_LITERAL(21, 304, 18), // "CGame::E_GameState"
+QT_MOC_LITERAL(22, 323, 8), // "newState"
+QT_MOC_LITERAL(23, 332, 36), // "on_tW_availablePlayers_double..."
+QT_MOC_LITERAL(24, 369, 5), // "index"
+QT_MOC_LITERAL(25, 375, 20) // "on_pB_logout_pressed"
 
     },
-    "MainWindow"
+    "MainWindow\0onGetPlayersListResponse\0"
+    "\0QList<CPlayer>\0availablePlayers\0"
+    "onStartNewGameServerResponse\0result\0"
+    "onNewGameRequested\0std::string\0"
+    "hostPlayerName\0onNewGameRequestPlayerResponse\0"
+    "response\0onGameInitialization\0playerColor\0"
+    "onBoardReceived\0char[8][8]\0board\0"
+    "onGameEnded\0reason\0onLogout\0"
+    "onGameStateChanged\0CGame::E_GameState\0"
+    "newState\0on_tW_availablePlayers_doubleClicked\0"
+    "index\0on_pB_logout_pressed"
 };
 #undef QT_MOC_LITERAL
 
@@ -44,22 +80,62 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: name, argc, parameters, tag, flags
+       1,    1,   69,    2, 0x0a /* Public */,
+       5,    1,   72,    2, 0x0a /* Public */,
+       7,    1,   75,    2, 0x0a /* Public */,
+      10,    1,   78,    2, 0x0a /* Public */,
+      12,    1,   81,    2, 0x0a /* Public */,
+      14,    1,   84,    2, 0x0a /* Public */,
+      17,    2,   87,    2, 0x0a /* Public */,
+      19,    0,   92,    2, 0x0a /* Public */,
+      20,    1,   93,    2, 0x0a /* Public */,
+      23,    1,   96,    2, 0x08 /* Private */,
+      25,    0,   99,    2, 0x08 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, QMetaType::Int,    6,
+    QMetaType::Void, 0x80000000 | 8,    9,
+    QMetaType::Void, QMetaType::Int,   11,
+    QMetaType::Void, QMetaType::Char,   13,
+    QMetaType::Void, 0x80000000 | 15,   16,
+    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8,    6,   18,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 21,   22,
+    QMetaType::Void, QMetaType::QModelIndex,   24,
+    QMetaType::Void,
+
        0        // eod
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        MainWindow *_t = static_cast<MainWindow *>(_o);
+        Q_UNUSED(_t)
+        switch (_id) {
+        case 0: _t->onGetPlayersListResponse((*reinterpret_cast< QList<CPlayer>(*)>(_a[1]))); break;
+        case 1: _t->onStartNewGameServerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->onNewGameRequested((*reinterpret_cast< std::string(*)>(_a[1]))); break;
+        case 3: _t->onNewGameRequestPlayerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->onGameInitialization((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 5: _t->onBoardReceived((*reinterpret_cast< char(*)[8][8]>(_a[1]))); break;
+        case 6: _t->onGameEnded((*reinterpret_cast< std::string(*)>(_a[1])),(*reinterpret_cast< std::string(*)>(_a[2]))); break;
+        case 7: _t->onLogout(); break;
+        case 8: _t->onGameStateChanged((*reinterpret_cast< CGame::E_GameState(*)>(_a[1]))); break;
+        case 9: _t->on_tW_availablePlayers_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 10: _t->on_pB_logout_pressed(); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -86,6 +162,15 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QMainWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 11)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 11;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 11)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 11;
+    }
     return _id;
 }
 QT_WARNING_POP

@@ -30,6 +30,7 @@ public:
     QLabel *lB_password;
     QPushButton *pB_login;
     QPushButton *pB_registerUser;
+    QLabel *lB_userAvatar;
 
     void setupUi(QDialog *CLoginForm)
     {
@@ -59,6 +60,11 @@ public:
         pB_registerUser->setObjectName(QStringLiteral("pB_registerUser"));
         pB_registerUser->setGeometry(QRect(220, 250, 121, 22));
         pB_registerUser->setFocusPolicy(Qt::NoFocus);
+        lB_userAvatar = new QLabel(CLoginForm);
+        lB_userAvatar->setObjectName(QStringLiteral("lB_userAvatar"));
+        lB_userAvatar->setGeometry(QRect(150, 20, 100, 100));
+        lB_userAvatar->setStyleSheet(QLatin1String("border: solid;\n"
+"border-width: 1px;"));
 
         retranslateUi(CLoginForm);
 
@@ -72,6 +78,7 @@ public:
         lB_password->setText(QApplication::translate("CLoginForm", "Password:", Q_NULLPTR));
         pB_login->setText(QApplication::translate("CLoginForm", "Login", Q_NULLPTR));
         pB_registerUser->setText(QApplication::translate("CLoginForm", "Register User", Q_NULLPTR));
+        lB_userAvatar->setText(QString());
     } // retranslateUi
 
 };

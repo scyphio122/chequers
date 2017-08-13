@@ -13,10 +13,13 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -26,6 +29,10 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
+    QGroupBox *gB_AvailablePlayers;
+    QTableWidget *tW_availablePlayers;
+    QPushButton *pB_requestNewGame;
+    QPushButton *pB_logout;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -34,13 +41,32 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1047, 638);
+        MainWindow->resize(1920, 900);
+        MainWindow->setMinimumSize(QSize(1920, 800));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        gB_AvailablePlayers = new QGroupBox(centralWidget);
+        gB_AvailablePlayers->setObjectName(QStringLiteral("gB_AvailablePlayers"));
+        gB_AvailablePlayers->setGeometry(QRect(1660, 40, 250, 791));
+        tW_availablePlayers = new QTableWidget(gB_AvailablePlayers);
+        tW_availablePlayers->setObjectName(QStringLiteral("tW_availablePlayers"));
+        tW_availablePlayers->setGeometry(QRect(10, 30, 230, 750));
+        tW_availablePlayers->setFocusPolicy(Qt::NoFocus);
+        tW_availablePlayers->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        tW_availablePlayers->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tW_availablePlayers->setSortingEnabled(true);
+        tW_availablePlayers->horizontalHeader()->setCascadingSectionResizes(true);
+        tW_availablePlayers->horizontalHeader()->setDefaultSectionSize(115);
+        pB_requestNewGame = new QPushButton(gB_AvailablePlayers);
+        pB_requestNewGame->setObjectName(QStringLiteral("pB_requestNewGame"));
+        pB_requestNewGame->setGeometry(QRect(20, 790, 221, 22));
+        pB_logout = new QPushButton(centralWidget);
+        pB_logout->setObjectName(QStringLiteral("pB_logout"));
+        pB_logout->setGeometry(QRect(1660, 10, 251, 22));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1047, 19));
+        menuBar->setGeometry(QRect(0, 0, 1920, 19));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -57,6 +83,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        gB_AvailablePlayers->setTitle(QApplication::translate("MainWindow", "List of available users", Q_NULLPTR));
+        pB_requestNewGame->setText(QApplication::translate("MainWindow", "Request New Game", Q_NULLPTR));
+        pB_logout->setText(QApplication::translate("MainWindow", "Log Out", Q_NULLPTR));
     } // retranslateUi
 
 };
