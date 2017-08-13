@@ -34,7 +34,11 @@ public:
     bool Logout();
 
     bool Resign();
+
 signals:
+    void signalStateChanged(E_GameState newState);
+
+    void signalRedrawBoard();
 
 public slots:
     void onLoginResponse(bool response);
@@ -43,15 +47,21 @@ public slots:
 
     void onGetPlayersListResponse(QList<CPlayer> playersList);
 
-    void onNewGameRequestPassedResponse(bool result);
+    void onStartNewGameServerResponse(bool result);
 
     void onNewGameRequested(std::string hostPlayerName);
 
+    void onNewGameRequestPlayerResponse(bool response);
+
+    void onGameInitialization(char playerColor);
+
     void onBoardReceived(char board[8][8]);
+
+    void onYourMove(bool status);
 
     void onGameEnded(std::string result, std::string reason);
 
-    void onGameInitialization(char playerColor);
+
 private:
 
     enum class E_GameState : unsigned char
@@ -76,7 +86,11 @@ private:
 
     bool m_SendFrame(CWebProtocolFrame& frame);
 
+    bool m_changeState(E_GameState newState);
+
     E_GameState m_state;
+
+    static std::map<E_GameState, const char*> s_stateMap;
 
     E_SideColor m_userColor;
 

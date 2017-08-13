@@ -38,6 +38,17 @@ void CWebProtocolFrame::FormFrame(std::string commandString, std::string params 
     m_frame.append("\r\n");
 }
 
+void CWebProtocolFrame::FormFrame(CWebProtocolFrame::E_ServerCommands command, std::string params = std::string())
+{
+    std::string commandString = GetCommandFromMap(command);
+    m_setCommand(commandString);
+    if (!params.empty())
+    {
+        m_setParameters(params);
+    }
+    m_frame.append("\r\n");
+}
+
 void CWebProtocolFrame::FormFrameFromReceivedData(std::string rawData)
 {
     int index = rawData.find("\r\n");

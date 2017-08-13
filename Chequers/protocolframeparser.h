@@ -25,11 +25,17 @@ signals:
 
     void signalNewGameRequested(std::string hostPlayerName);
 
+    void signalNewGameRequestResponse(int result);
+
+    void signalGameInitialization(char playerColor);
+
     void signalBoardReceived(char board[8][8]);
+
+    void signalYourMove(bool status);
 
     void signalGameEnded(std::string result, std::string reason);
 
-    void signalGameInitialization(char playerColor);
+
 
 public slots:
     void Parse(QByteArray receivedData);

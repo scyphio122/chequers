@@ -183,7 +183,16 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
 
         case CWebProtocolFrame::E_ServerCommands::E_NEW_GAME_REQUEST_RESPONSE:
             {
-                LOG_WARNING("UNEXPECTED FRAME TYPE");
+                if (params.size() == 1)
+                {
+                    int requestStatus = params[0].toInt();
+                    LOG_DBG("Response from player: %s", requestStatus? "Invitation accepted" : "Invitation declined");
+                    emit newGameRequestResponse(requestStatus);
+                }
+                else
+                {
+                    LOG_FATAL("Wrong number of parameters");
+                }
             }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_RESIGN:
