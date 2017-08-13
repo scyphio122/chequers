@@ -29,7 +29,7 @@ public:
 
     CWebProtocolFrame();
 
-    void FormFrame(std::string commandString, std::string params);
+    void FormFrame(std::string commandString, std::string params = std::string());
 
     void FormFrame(CWebProtocolFrame::E_ServerCommands command, std::string params = std::string());
 

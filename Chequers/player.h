@@ -6,15 +6,16 @@
 class CPlayer
 {
 public:
-    CPlayer();
-    CPlayer(std::string playerName, E_PlayerStatus status);
-
     enum class E_PlayerStatus : char
     {
         E_INVALID,
         E_WAITING_FOR_PLAY = 'A',
         E_OCCUPIED = 'B'
     };
+
+    CPlayer();
+
+    CPlayer(std::string playerName, E_PlayerStatus status);
 
     std::string GetPlayerName();
 

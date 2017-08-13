@@ -5,7 +5,7 @@
 #include "webmanager.h"
 #include "logger.h"
 
-std::map<E_GameState, const char*> CGame::s_stateMap =
+std::map<CGame::E_GameState, const char*> CGame::s_stateMap =
 {
     {CGame::E_GameState::E_NOT_INITIALIZED, "NOT_INITIALIZED"},
     {CGame::E_GameState::E_LOGGED_IN, "LOGGED_IN"},
@@ -21,13 +21,23 @@ CGame::CGame()
     m_state = E_GameState::E_NOT_INITIALIZED;
 
     m_pParser = CProtocolFrameParser::GetInstance();
+    connect(m_pParser, SIGNAL(signalLoginRetval(bool)), this, SLOT(onLoginResponse(bool)));
+    connect(m_pParser, SIGNAL(signalRegisterRetval(bool)), this, SLOT(onUserRegistrationResponse(bool)));
+    connect(m_pParser, SIGNAL(signalListOfPlayersReceived(QList<CPlayer>)), this, SLOT(onGetPlayersListResponse(QList<CPlayer>)));
+    connect(m_pParser, SIGNAL(signalNewGameRequestPassed(int)), this, SLOT(onStartNewGameServerResponse(int)));
+    connect(m_pParser, SIGNAL(signalNewGameRequestResponse(int)), this, SLOT(onNewGameRequestPlayerResponse(int)));
+    connect(m_pParser, SIGNAL(signalNewGameRequested(std::string)), this, SLOT(onNewGameRequested(std::string)));
+    connect(m_pParser, SIGNAL(signalGameInitialization(char)), this, SLOT(onGameInitialization(char)));
+    connect(m_pParser, SIGNAL(signalBoardReceived(char[][])), this, SLOT(onBoardReceived(char[][])));
+    connect(m_pParser, SIGNAL(signalYourMove(bool)), this, SLOT(onYourMove(bool)));
+    connect(m_pParser, SIGNAL(signalGameEnded(std::string,std::string)), this, SLOT(onGameEnded(std::string,std::string)));
+
     connect(CWebManager::GetInstance(), SIGNAL(signalDataAvailable(QByteArray)), m_pParser, SLOT(Parse(QByteArray)));
 
-    m_pThread = new QThread();
     m_pMutex = new QMutex(QMutex::Recursive);
 
+    m_pThread = new QThread();
     connect(this, SIGNAL(destroyed(QObject*)), m_pThread, SLOT(deleteLater()));
-
     this->moveToThread(m_pThread);
     m_pThread->start();
 }
@@ -41,6 +51,11 @@ CGame* CGame::GetInstance()
 {
     static CGame s_game;
     return &s_game;
+}
+
+char* CGame::GetBoard()
+{
+    return &m_board[0][0];
 }
 
 /*
@@ -123,7 +138,10 @@ bool CGame::Logout()
 
     bool retval = m_SendFrame(frame);
     if (retval)
+    {
         m_loggedIn = false;
+        m_changeState(E_GameState::E_NOT_INITIALIZED);
+    }
 
     return retval;
 }
@@ -159,7 +177,7 @@ void CGame::onLoginResponse(bool response)
     else
     {
         m_loggedIn = false;
-        m_changeState(E_GameState::E_NOT_INITIALIZED)
+        m_changeState(E_GameState::E_NOT_INITIALIZED);
     }
 }
 
@@ -173,10 +191,10 @@ void CGame::onGetPlayersListResponse(QList<CPlayer> playersList)
     m_playersList = playersList;
 }
 
-void CGame::onStartNewGameServerResponse(bool result)
+void CGame::onStartNewGameServerResponse(int result)
 {
     //   If request was successfully passed to the player
-    if (result == true)
+    if (result > 0)
         m_changeState(E_GameState::E_WAITING_FOR_ACCEPT);
     else   // If player is no longer available
         LOG_CRITICAL("Player not available");
@@ -187,11 +205,11 @@ void CGame::onNewGameRequested(std::__cxx11::string hostPlayerName)
     LOG_DBG("Received new game request from player: %s", hostPlayerName.c_str());
 }
 
-void CGame::onNewGameRequestPlayerResponse(bool response)
+void CGame::onNewGameRequestPlayerResponse(int response)
 {
     LOG_DBG("Player has %s the invitation", response? "accepted" : "declined");
 
-    if (response)
+    if (response > 0)
     {
         m_changeState(E_GameState::E_GAME_REQUEST);
     }
@@ -203,11 +221,11 @@ void CGame::onNewGameRequestPlayerResponse(bool response)
 
 void CGame::onGameInitialization(char playerColor)
 {
-    m_userColor = playerColor;
+    m_userColor = (E_SideColor)playerColor;
     m_changeState(E_GameState::E_PLAYING_GAME);
 }
 
-void CGame::onBoardReceived(char board[][])
+void CGame::onBoardReceived(char board[8][8])
 {
     memcpy(m_board, board, 64);
 

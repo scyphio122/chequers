@@ -142,7 +142,7 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
                 LOG_DBG("Number of players available ond server: %d", params.size());
                 for (int i=0; i< params.size(); i+=2)
                 {
-                    playersList.append(CPlayer(params[i].toStdString(), params[i+1].toStdString()));
+                    playersList.append(CPlayer(params[i].toStdString(), (CPlayer::E_PlayerStatus)(params[i+1].toStdString()[0])));
                 }
 
                 emit signalListOfPlayersReceived(playersList);
@@ -187,7 +187,7 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
                 {
                     int requestStatus = params[0].toInt();
                     LOG_DBG("Response from player: %s", requestStatus? "Invitation accepted" : "Invitation declined");
-                    emit newGameRequestResponse(requestStatus);
+                    emit signalNewGameRequestResponse(requestStatus);
                 }
                 else
                 {

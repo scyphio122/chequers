@@ -28,7 +28,7 @@ CWebProtocolFrame::CWebProtocolFrame()
     m_frame.clear();
 }
 
-void CWebProtocolFrame::FormFrame(std::string commandString, std::string params = std::string())
+void CWebProtocolFrame::FormFrame(std::string commandString, std::string params)
 {
     m_setCommand(commandString);
     if (!params.empty())
@@ -38,7 +38,7 @@ void CWebProtocolFrame::FormFrame(std::string commandString, std::string params 
     m_frame.append("\r\n");
 }
 
-void CWebProtocolFrame::FormFrame(CWebProtocolFrame::E_ServerCommands command, std::string params = std::string())
+void CWebProtocolFrame::FormFrame(CWebProtocolFrame::E_ServerCommands command, std::string params)
 {
     std::string commandString = GetCommandFromMap(command);
     m_setCommand(commandString);

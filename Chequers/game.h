@@ -19,13 +19,36 @@ public:
         E_BLACK = 'C'
     };
 
+    enum class E_GameState : unsigned char
+    {
+        E_NOT_INITIALIZED,
+
+        /** zalogowany - brak oczekujących zaproszeń */
+        E_LOGGED_IN,
+
+        /** czeka na zaakceptowanie zaproszenia do gry */
+        E_WAITING_FOR_ACCEPT,
+
+        /** zaproszenie do gry (w trakcie odpowiadania na zaproszenie) */
+        E_GAME_REQUEST,
+
+        /** gra rozpoczęta */
+        E_PLAYING_GAME
+    };
+
     ~CGame();
 
     static CGame* GetInstance();
 
+    char* GetBoard();
+
+    /* GAME API */
+
     bool Login(std::string username, std::string password);
 
     bool RegisterUser(std::string username, std::string password);
+
+    bool GetPlayersList();
 
     bool StartNewGame(std::string secondPlayerName);
 
@@ -47,11 +70,11 @@ public slots:
 
     void onGetPlayersListResponse(QList<CPlayer> playersList);
 
-    void onStartNewGameServerResponse(bool result);
+    void onStartNewGameServerResponse(int result);
 
     void onNewGameRequested(std::string hostPlayerName);
 
-    void onNewGameRequestPlayerResponse(bool response);
+    void onNewGameRequestPlayerResponse(int response);
 
     void onGameInitialization(char playerColor);
 
@@ -61,26 +84,7 @@ public slots:
 
     void onGameEnded(std::string result, std::string reason);
 
-
 private:
-
-    enum class E_GameState : unsigned char
-    {
-        E_NOT_INITIALIZED,
-
-        /** zalogowany - brak oczekujących zaproszeń */
-        E_LOGGED_IN,
-
-        /** czeka na zaakceptowanie zaproszenia do gry */
-        E_WAITING_FOR_ACCEPT,
-
-        /** zaproszenie do gry (w trakcie odpowiadania na zaproszenie) */
-        E_GAME_REQUEST,
-
-        /** gra rozpoczęta */
-        E_PLAYING_GAME
-    };
-
 
     CGame();
 
