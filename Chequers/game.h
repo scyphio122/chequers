@@ -56,7 +56,7 @@ public:
 
     bool RespondToGameInvitation(bool accept);
 
-    bool MakeMove();
+    bool MakeMove(int xFrom, int yFrom, int xTo, int yTo);
 
     bool Logout();
 
@@ -68,6 +68,8 @@ signals:
     void signalRedrawBoard();
 
     void signalLogout();
+
+    void signalMoveMade();
 
 public slots:
     void onLoginResponse(bool response);
@@ -89,6 +91,8 @@ public slots:
     void onYourMove(bool status);
 
     void onGameEnded(std::string result, std::string reason);
+
+    void onMakeMoveServerResponse(int result);
 
 private:
 
@@ -113,6 +117,8 @@ private:
     CProtocolFrameParser* m_pParser;
 
     char m_board[8][8];
+
+    char m_bufferedBoard[8][8];
 
     QThread* m_pThread;
 

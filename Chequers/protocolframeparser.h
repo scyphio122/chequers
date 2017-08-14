@@ -35,6 +35,8 @@ signals:
 
     void signalGameEnded(std::string result, std::string reason);
 
+    void signalMakeMoveServerResponse(int result);
+
 
 
 public slots:

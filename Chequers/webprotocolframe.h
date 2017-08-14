@@ -24,7 +24,8 @@ public:
         E_GAME_ENDED = 11,
         E_LOGOUT = 12,
         E_ERROR = 13,
-        E_INCONSISTENCY = 14
+        E_INCONSISTENCY = 14,
+        E_MAKE_MOVE = 15
     };
 
     CWebProtocolFrame();

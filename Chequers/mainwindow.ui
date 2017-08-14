@@ -26,7 +26,7 @@
       <x>1660</x>
       <y>40</y>
       <width>250</width>
-      <height>791</height>
+      <height>800</height>
      </rect>
     </property>
     <property name="title">
@@ -38,7 +38,7 @@
        <x>10</x>
        <y>30</y>
        <width>230</width>
-       <height>750</height>
+       <height>711</height>
       </rect>
      </property>
      <property name="focusPolicy">
@@ -46,6 +46,9 @@
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
@@ -63,8 +66,8 @@
     <widget class="QPushButton" name="pB_requestNewGame">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>790</y>
+       <x>10</x>
+       <y>750</y>
        <width>221</width>
        <height>22</height>
       </rect>
@@ -86,6 +89,58 @@
     <property name="text">
      <string>Log Out</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="gB_board">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>1641</width>
+      <height>841</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QPushButton" name="pB_resign">
+     <property name="geometry">
+      <rect>
+       <x>1250</x>
+       <y>30</y>
+       <width>241</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Resign</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="lcd_time">
+     <property name="geometry">
+      <rect>
+       <x>1500</x>
+       <y>30</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="Line" name="line">
+     <property name="geometry">
+      <rect>
+       <x>17</x>
+       <y>60</y>
+       <width>1611</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

@@ -220,16 +220,28 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
             }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_ERROR:
-        {
-            if (params.size() == 1)
             {
-                LOG_FATAL("Error command: %s", params[0].toStdString());
-            }
-            else
+                if (params.size() == 1)
+                {
+                    LOG_FATAL("Error command: %s", params[0].toStdString());
+                }
+                else
+                {
+                    LOG_FATAL("Wrong number of parameters");
+                }
+            }break;
+
+        case CWebProtocolFrame::E_ServerCommands::E_MAKE_MOVE:
             {
-                LOG_FATAL("Wrong number of parameters");
-            }
-        }break;
+                if (params.size() == 1)
+                {
+                    emit signalMakeMoveServerResponse(params[0]);
+                }
+                else
+                {
+                    LOG_FATAL("Wrong number of parameters");
+                }
+            }break;
 
         default:
         {

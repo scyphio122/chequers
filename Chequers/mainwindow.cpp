@@ -48,6 +48,7 @@ void MainWindow::m_initializeLayout()
 {
     ui->tW_availablePlayers->setRowCount(0);
     ui->gB_AvailablePlayers->setEnabled(true);
+    ui->gB_board->setEnabled(false);
     ui->pB_logout->setEnabled(true);
 }
 
@@ -114,7 +115,6 @@ void MainWindow::onStartNewGameServerResponse(int result)
         box.setIcon(QMessageBox::Critical);
         box.exec();
 
-        ui->gB_AvailablePlayers->setEnabled(true);
         // Refresh the players list
         CGame::GetInstance()->GetPlayersList();
     }
@@ -126,11 +126,11 @@ void MainWindow::onNewGameRequestPlayerResponse(int response)
     // Player has agreed to start the game
     if (response > 0)
     {
-        ui->gB_AvailablePlayers->setEnabled(false);
+
     }
     else
     {
-        ui->gB_AvailablePlayers->setEnabled(true);
+
     }
 }
 
@@ -144,7 +144,8 @@ void MainWindow::onNewGameRequested(std::__cxx11::string hostPlayerName)
 
 void MainWindow::onGameInitialization(char playerColor)
 {
-
+    ui->gB_board->setEnabled(true);
+    ui->gB_AvailablePlayers->setEnabled(false);
 }
 
 void MainWindow::onBoardReceived(char *board)
@@ -156,10 +157,11 @@ void MainWindow::onGameEnded(std::__cxx11::string result, std::__cxx11::string r
 {
     QMessageBox box;
 
-    box.setText("You " + QString::fromStdString(result) + ". Reason is: " + QString::fromStdString(reason));
+    box.setText("Player " + QString::fromStdString(result) + " won. Reason is: " + QString::fromStdString(reason));
     box.setIcon(QMessageBox::NoIcon);
     box.exec();
 
+    ui->gB_board->setEnabled(false);
     ui->gB_AvailablePlayers->setEnabled(true);
 }
 
@@ -174,7 +176,6 @@ void MainWindow::onLogout()
 void MainWindow::m_startNewGame(std::__cxx11::string userName)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    ui->gB_AvailablePlayers->setEnabled(false);
     CGame::GetInstance()->StartNewGame(userName);
 }
 
@@ -189,4 +190,26 @@ void MainWindow::on_tW_availablePlayers_doubleClicked(const QModelIndex &index)
 void MainWindow::on_pB_logout_pressed()
 {
     CGame::GetInstance()->Logout();
+}
+
+void MainWindow::on_pB_resign_pressed()
+{
+    CGame::GetInstance()->Resign();
+}
+
+void MainWindow::on_pB_requestNewGame_pressed()
+{
+    QList<QTableWidgetItem*> selectedItems = ui->tW_availablePlayers->selectedItems();
+    if (selectedItems.empty())
+    {
+        QMessageBox box;
+        box.setText("No player selected");
+        box.setIcon(QMessageBox::Information);
+        box.exec();
+        return;
+    }
+
+    int row = selectedItems[0]->row();
+    std::string userName = ui->tW_availablePlayers->item(row, 0)->text().toStdString();
+    m_startNewGame(userName);
 }

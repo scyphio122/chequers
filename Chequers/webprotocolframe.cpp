@@ -21,6 +21,7 @@ std::map<CWebProtocolFrame::E_ServerCommands, std::string>CWebProtocolFrame::s_c
     {CWebProtocolFrame::E_ServerCommands::E_LOGOUT, "LGO"},
     {CWebProtocolFrame::E_ServerCommands::E_ERROR, "ERR"},
     {CWebProtocolFrame::E_ServerCommands::E_INCONSISTENCY, "ERS"},
+    {CWebProtocolFrame::E_ServerCommands::E_MAKE_MOVE, "MOV"}
 };
 
 CWebProtocolFrame::CWebProtocolFrame()

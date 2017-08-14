@@ -30,12 +30,12 @@ public:
     {
         if (CGameRequestPopup->objectName().isEmpty())
             CGameRequestPopup->setObjectName(QStringLiteral("CGameRequestPopup"));
-        CGameRequestPopup->resize(800, 100);
-        CGameRequestPopup->setMinimumSize(QSize(800, 100));
-        CGameRequestPopup->setMaximumSize(QSize(800, 100));
+        CGameRequestPopup->resize(600, 100);
+        CGameRequestPopup->setMinimumSize(QSize(600, 100));
+        CGameRequestPopup->setMaximumSize(QSize(600, 100));
         buttonBox = new QDialogButtonBox(CGameRequestPopup);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));
-        buttonBox->setGeometry(QRect(50, 60, 691, 32));
+        buttonBox->setGeometry(QRect(200, 60, 200, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::No|QDialogButtonBox::Yes);
         buttonBox->setCenterButtons(true);

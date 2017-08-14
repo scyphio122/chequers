@@ -4,6 +4,7 @@
 #include "webprotocolframe.h"
 #include "webmanager.h"
 #include "logger.h"
+#include <sstream>
 
 std::map<CGame::E_GameState, const char*> CGame::s_stateMap =
 {
@@ -32,6 +33,7 @@ CGame::CGame()
     connect(m_pParser, SIGNAL(signalBoardReceived(char*)), this, SLOT(onBoardReceived(char*)));
     connect(m_pParser, SIGNAL(signalYourMove(bool)), this, SLOT(onYourMove(bool)));
     connect(m_pParser, SIGNAL(signalGameEnded(std::string,std::string)), this, SLOT(onGameEnded(std::string,std::string)));
+    connect(m_pParser, SIGNAL(signalMakeMoveServerResponse(int)), this, SLOT(onMakeMoveServerResponse(int)));
 
     connect(CWebManager::GetInstance(), SIGNAL(signalDataAvailable(QByteArray)), m_pParser, SLOT(Parse(QByteArray)));
 
@@ -198,6 +200,23 @@ bool CGame::Resign()
     return m_SendFrame(frame);
 }
 
+bool CGame::MakeMove(int xFrom, int yFrom, int xTo, int yTo)
+{
+    if (m_state != E_GameState::E_PLAYING_GAME)
+    {
+        LOG_CRITICAL("Unexpected state. Is %s, should be %s", s_stateMap[m_state], s_stateMap[E_GameState::E_PLAYING_GAME]);
+        return false;
+    }
+
+    CWebProtocolFrame frame;
+
+    std::stringstream params;
+    params << xFrom << "#" << yFrom << "#" << xTo << "#" << yTo;
+
+    frame.FormFrame(CWebProtocolFrame::GetCommandFromMap(CWebProtocolFrame::E_ServerCommands::E_MAKE_MOVE), params.str());
+
+    return m_SendFrame(frame);
+}
 
 /*
  *  ###############################################
@@ -293,6 +312,20 @@ void CGame::onGameEnded(std::__cxx11::string result, std::__cxx11::string reason
     GetPlayersList();
 }
 
+void CGame::onMakeMoveServerResponse(int result)
+{
+    LOG_DBG("Move is %s", result? "ACCEPTED" : "FORBIDDEN");
+    if (result > 0)
+    {
+        // Do nothing - action is done when E_BOARD is received
+    }
+    else
+    {
+        // Copy back the current board to the buffer
+        memcpy(m_bufferedBoard, m_board, 64);
+        return;
+    }
+}
 
 /*
  *  #######################################################

@@ -47,6 +47,10 @@ private slots:
 
     void on_pB_logout_pressed();
 
+    void on_pB_resign_pressed();
+
+    void on_pB_requestNewGame_pressed();
+
 private:
 
     void m_startNewGame(std::string userName);
