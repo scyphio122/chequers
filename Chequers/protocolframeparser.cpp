@@ -126,7 +126,7 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
             {
                 if (params.size() == 1)
                 {
-                    char playerColor = static_cast<char>(params[0].toInt());
+                    char playerColor = (char)params[0].toStdString()[0];
 
                     emit signalGameInitialization(playerColor);
                 }
