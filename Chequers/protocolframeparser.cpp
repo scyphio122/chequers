@@ -235,7 +235,7 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
             {
                 if (params.size() == 1)
                 {
-                    emit signalMakeMoveServerResponse(params[0]);
+                    emit signalMakeMoveServerResponse(params[0].toInt());
                 }
                 else
                 {

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CProtocolFrameParser_t {
-    QByteArrayData data[25];
-    char stringdata0[370];
+    QByteArrayData data[26];
+    char stringdata0[399];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,8 +55,9 @@ QT_MOC_LITERAL(19, 306, 14), // "signalYourMove"
 QT_MOC_LITERAL(20, 321, 6), // "status"
 QT_MOC_LITERAL(21, 328, 15), // "signalGameEnded"
 QT_MOC_LITERAL(22, 344, 6), // "reason"
-QT_MOC_LITERAL(23, 351, 5), // "Parse"
-QT_MOC_LITERAL(24, 357, 12) // "receivedData"
+QT_MOC_LITERAL(23, 351, 28), // "signalMakeMoveServerResponse"
+QT_MOC_LITERAL(24, 380, 5), // "Parse"
+QT_MOC_LITERAL(25, 386, 12) // "receivedData"
 
     },
     "CProtocolFrameParser\0signalLoginRetval\0"
@@ -68,7 +69,8 @@ QT_MOC_LITERAL(24, 357, 12) // "receivedData"
     "signalGameInitialization\0playerColor\0"
     "signalBoardReceived\0char*\0board\0"
     "signalYourMove\0status\0signalGameEnded\0"
-    "reason\0Parse\0receivedData"
+    "reason\0signalMakeMoveServerResponse\0"
+    "Parse\0receivedData"
 };
 #undef QT_MOC_LITERAL
 
@@ -78,27 +80,28 @@ static const uint qt_meta_data_CProtocolFrameParser[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      10,       // signalCount
+      11,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   69,    2, 0x06 /* Public */,
-       4,    1,   72,    2, 0x06 /* Public */,
-       5,    1,   75,    2, 0x06 /* Public */,
-       8,    1,   78,    2, 0x06 /* Public */,
-      10,    1,   81,    2, 0x06 /* Public */,
-      13,    1,   84,    2, 0x06 /* Public */,
-      14,    1,   87,    2, 0x06 /* Public */,
-      16,    1,   90,    2, 0x06 /* Public */,
-      19,    1,   93,    2, 0x06 /* Public */,
-      21,    2,   96,    2, 0x06 /* Public */,
+       1,    1,   74,    2, 0x06 /* Public */,
+       4,    1,   77,    2, 0x06 /* Public */,
+       5,    1,   80,    2, 0x06 /* Public */,
+       8,    1,   83,    2, 0x06 /* Public */,
+      10,    1,   86,    2, 0x06 /* Public */,
+      13,    1,   89,    2, 0x06 /* Public */,
+      14,    1,   92,    2, 0x06 /* Public */,
+      16,    1,   95,    2, 0x06 /* Public */,
+      19,    1,   98,    2, 0x06 /* Public */,
+      21,    2,  101,    2, 0x06 /* Public */,
+      23,    1,  106,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      23,    1,  101,    2, 0x0a /* Public */,
+      24,    1,  109,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Bool,    3,
@@ -111,9 +114,10 @@ static const uint qt_meta_data_CProtocolFrameParser[] = {
     QMetaType::Void, 0x80000000 | 17,   18,
     QMetaType::Void, QMetaType::Bool,   20,
     QMetaType::Void, 0x80000000 | 11, 0x80000000 | 11,    9,   22,
+    QMetaType::Void, QMetaType::Int,    9,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QByteArray,   24,
+    QMetaType::Void, QMetaType::QByteArray,   25,
 
        0        // eod
 };
@@ -134,7 +138,8 @@ void CProtocolFrameParser::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         case 7: _t->signalBoardReceived((*reinterpret_cast< char*(*)>(_a[1]))); break;
         case 8: _t->signalYourMove((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 9: _t->signalGameEnded((*reinterpret_cast< std::string(*)>(_a[1])),(*reinterpret_cast< std::string(*)>(_a[2]))); break;
-        case 10: _t->Parse((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
+        case 10: _t->signalMakeMoveServerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->Parse((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -210,6 +215,13 @@ void CProtocolFrameParser::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
                 return;
             }
         }
+        {
+            typedef void (CProtocolFrameParser::*_t)(int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CProtocolFrameParser::signalMakeMoveServerResponse)) {
+                *result = 10;
+                return;
+            }
+        }
     }
 }
 
@@ -238,13 +250,13 @@ int CProtocolFrameParser::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }
@@ -317,6 +329,13 @@ void CProtocolFrameParser::signalGameEnded(std::string _t1, std::string _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 9, _a);
+}
+
+// SIGNAL 10
+void CProtocolFrameParser::signalMakeMoveServerResponse(int _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 10, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE
