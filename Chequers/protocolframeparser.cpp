@@ -102,7 +102,7 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
                 {
                     char board[8][8];
                     memcpy(board, params[0].data(), sizeof(board));
-                    emit signalBoardReceived(board);
+                    emit signalBoardReceived((char*)board);
                 }
                 else
                 {

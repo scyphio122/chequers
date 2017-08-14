@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CProtocolFrameParser_t {
     QByteArrayData data[25];
-    char stringdata0[375];
+    char stringdata0[370];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,14 +49,14 @@ QT_MOC_LITERAL(13, 208, 28), // "signalNewGameRequestResponse"
 QT_MOC_LITERAL(14, 237, 24), // "signalGameInitialization"
 QT_MOC_LITERAL(15, 262, 11), // "playerColor"
 QT_MOC_LITERAL(16, 274, 19), // "signalBoardReceived"
-QT_MOC_LITERAL(17, 294, 10), // "char[8][8]"
-QT_MOC_LITERAL(18, 305, 5), // "board"
-QT_MOC_LITERAL(19, 311, 14), // "signalYourMove"
-QT_MOC_LITERAL(20, 326, 6), // "status"
-QT_MOC_LITERAL(21, 333, 15), // "signalGameEnded"
-QT_MOC_LITERAL(22, 349, 6), // "reason"
-QT_MOC_LITERAL(23, 356, 5), // "Parse"
-QT_MOC_LITERAL(24, 362, 12) // "receivedData"
+QT_MOC_LITERAL(17, 294, 5), // "char*"
+QT_MOC_LITERAL(18, 300, 5), // "board"
+QT_MOC_LITERAL(19, 306, 14), // "signalYourMove"
+QT_MOC_LITERAL(20, 321, 6), // "status"
+QT_MOC_LITERAL(21, 328, 15), // "signalGameEnded"
+QT_MOC_LITERAL(22, 344, 6), // "reason"
+QT_MOC_LITERAL(23, 351, 5), // "Parse"
+QT_MOC_LITERAL(24, 357, 12) // "receivedData"
 
     },
     "CProtocolFrameParser\0signalLoginRetval\0"
@@ -66,7 +66,7 @@ QT_MOC_LITERAL(24, 362, 12) // "receivedData"
     "result\0signalNewGameRequested\0std::string\0"
     "hostPlayerName\0signalNewGameRequestResponse\0"
     "signalGameInitialization\0playerColor\0"
-    "signalBoardReceived\0char[8][8]\0board\0"
+    "signalBoardReceived\0char*\0board\0"
     "signalYourMove\0status\0signalGameEnded\0"
     "reason\0Parse\0receivedData"
 };
@@ -131,7 +131,7 @@ void CProtocolFrameParser::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         case 4: _t->signalNewGameRequested((*reinterpret_cast< std::string(*)>(_a[1]))); break;
         case 5: _t->signalNewGameRequestResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 6: _t->signalGameInitialization((*reinterpret_cast< char(*)>(_a[1]))); break;
-        case 7: _t->signalBoardReceived((*reinterpret_cast< char(*)[8][8]>(_a[1]))); break;
+        case 7: _t->signalBoardReceived((*reinterpret_cast< char*(*)>(_a[1]))); break;
         case 8: _t->signalYourMove((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 9: _t->signalGameEnded((*reinterpret_cast< std::string(*)>(_a[1])),(*reinterpret_cast< std::string(*)>(_a[2]))); break;
         case 10: _t->Parse((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
@@ -190,7 +190,7 @@ void CProtocolFrameParser::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
             }
         }
         {
-            typedef void (CProtocolFrameParser::*_t)(char [8][8]);
+            typedef void (CProtocolFrameParser::*_t)(char * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CProtocolFrameParser::signalBoardReceived)) {
                 *result = 7;
                 return;
@@ -299,7 +299,7 @@ void CProtocolFrameParser::signalGameInitialization(char _t1)
 }
 
 // SIGNAL 7
-void CProtocolFrameParser::signalBoardReceived(char _t1[8][8])
+void CProtocolFrameParser::signalBoardReceived(char * _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 7, _a);

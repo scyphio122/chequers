@@ -74,9 +74,15 @@ void CLoginForm::m_login(std::__cxx11::string userName, std::__cxx11::string pas
 void CLoginForm::onLoginResponse(bool response)
 {
     QApplication::restoreOverrideCursor();
+
+    ui->lE_userName->setEnabled(true);
+    ui->lE_password->setEnabled(true);
+    ui->pB_login->setEnabled(true);
+    ui->pB_registerUser->setEnabled(true);
+
     if (response == true)
     {
-        this->close();
+        this->hide();
         m_pMainwindow->show();
     }
     else
@@ -85,11 +91,6 @@ void CLoginForm::onLoginResponse(bool response)
         box.setText("Username or password is invalid");
         box.setIcon(QMessageBox::Icon::Warning);
         box.exec();
-
-        ui->lE_userName->setEnabled(true);
-        ui->lE_password->setEnabled(true);
-        ui->pB_login->setEnabled(true);
-        ui->pB_registerUser->setEnabled(true);
 
         ui->lE_userName->setFocus();
         ui->lE_userName->selectAll();

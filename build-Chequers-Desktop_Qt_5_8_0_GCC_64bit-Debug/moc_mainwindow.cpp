@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[26];
-    char stringdata0[396];
+    char stringdata0[391];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -47,17 +47,17 @@ QT_MOC_LITERAL(11, 182, 8), // "response"
 QT_MOC_LITERAL(12, 191, 20), // "onGameInitialization"
 QT_MOC_LITERAL(13, 212, 11), // "playerColor"
 QT_MOC_LITERAL(14, 224, 15), // "onBoardReceived"
-QT_MOC_LITERAL(15, 240, 10), // "char[8][8]"
-QT_MOC_LITERAL(16, 251, 5), // "board"
-QT_MOC_LITERAL(17, 257, 11), // "onGameEnded"
-QT_MOC_LITERAL(18, 269, 6), // "reason"
-QT_MOC_LITERAL(19, 276, 8), // "onLogout"
-QT_MOC_LITERAL(20, 285, 18), // "onGameStateChanged"
-QT_MOC_LITERAL(21, 304, 18), // "CGame::E_GameState"
-QT_MOC_LITERAL(22, 323, 8), // "newState"
-QT_MOC_LITERAL(23, 332, 36), // "on_tW_availablePlayers_double..."
-QT_MOC_LITERAL(24, 369, 5), // "index"
-QT_MOC_LITERAL(25, 375, 20) // "on_pB_logout_pressed"
+QT_MOC_LITERAL(15, 240, 5), // "char*"
+QT_MOC_LITERAL(16, 246, 5), // "board"
+QT_MOC_LITERAL(17, 252, 11), // "onGameEnded"
+QT_MOC_LITERAL(18, 264, 6), // "reason"
+QT_MOC_LITERAL(19, 271, 8), // "onLogout"
+QT_MOC_LITERAL(20, 280, 18), // "onGameStateChanged"
+QT_MOC_LITERAL(21, 299, 18), // "CGame::E_GameState"
+QT_MOC_LITERAL(22, 318, 8), // "newState"
+QT_MOC_LITERAL(23, 327, 36), // "on_tW_availablePlayers_double..."
+QT_MOC_LITERAL(24, 364, 5), // "index"
+QT_MOC_LITERAL(25, 370, 20) // "on_pB_logout_pressed"
 
     },
     "MainWindow\0onGetPlayersListResponse\0"
@@ -66,10 +66,10 @@ QT_MOC_LITERAL(25, 375, 20) // "on_pB_logout_pressed"
     "onNewGameRequested\0std::string\0"
     "hostPlayerName\0onNewGameRequestPlayerResponse\0"
     "response\0onGameInitialization\0playerColor\0"
-    "onBoardReceived\0char[8][8]\0board\0"
-    "onGameEnded\0reason\0onLogout\0"
-    "onGameStateChanged\0CGame::E_GameState\0"
-    "newState\0on_tW_availablePlayers_doubleClicked\0"
+    "onBoardReceived\0char*\0board\0onGameEnded\0"
+    "reason\0onLogout\0onGameStateChanged\0"
+    "CGame::E_GameState\0newState\0"
+    "on_tW_availablePlayers_doubleClicked\0"
     "index\0on_pB_logout_pressed"
 };
 #undef QT_MOC_LITERAL
@@ -127,7 +127,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->onNewGameRequested((*reinterpret_cast< std::string(*)>(_a[1]))); break;
         case 3: _t->onNewGameRequestPlayerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->onGameInitialization((*reinterpret_cast< char(*)>(_a[1]))); break;
-        case 5: _t->onBoardReceived((*reinterpret_cast< char(*)[8][8]>(_a[1]))); break;
+        case 5: _t->onBoardReceived((*reinterpret_cast< char*(*)>(_a[1]))); break;
         case 6: _t->onGameEnded((*reinterpret_cast< std::string(*)>(_a[1])),(*reinterpret_cast< std::string(*)>(_a[2]))); break;
         case 7: _t->onLogout(); break;
         case 8: _t->onGameStateChanged((*reinterpret_cast< CGame::E_GameState(*)>(_a[1]))); break;

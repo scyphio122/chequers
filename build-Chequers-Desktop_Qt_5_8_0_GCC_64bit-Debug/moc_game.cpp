@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CGame_t {
     QByteArrayData data[28];
-    char stringdata0[405];
+    char stringdata0[400];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -54,12 +54,12 @@ QT_MOC_LITERAL(18, 271, 30), // "onNewGameRequestPlayerResponse"
 QT_MOC_LITERAL(19, 302, 20), // "onGameInitialization"
 QT_MOC_LITERAL(20, 323, 11), // "playerColor"
 QT_MOC_LITERAL(21, 335, 15), // "onBoardReceived"
-QT_MOC_LITERAL(22, 351, 10), // "char[8][8]"
-QT_MOC_LITERAL(23, 362, 5), // "board"
-QT_MOC_LITERAL(24, 368, 10), // "onYourMove"
-QT_MOC_LITERAL(25, 379, 6), // "status"
-QT_MOC_LITERAL(26, 386, 11), // "onGameEnded"
-QT_MOC_LITERAL(27, 398, 6) // "reason"
+QT_MOC_LITERAL(22, 351, 5), // "char*"
+QT_MOC_LITERAL(23, 357, 5), // "board"
+QT_MOC_LITERAL(24, 363, 10), // "onYourMove"
+QT_MOC_LITERAL(25, 374, 6), // "status"
+QT_MOC_LITERAL(26, 381, 11), // "onGameEnded"
+QT_MOC_LITERAL(27, 393, 6) // "reason"
 
     },
     "CGame\0signalStateChanged\0\0CGame::E_GameState\0"
@@ -71,8 +71,8 @@ QT_MOC_LITERAL(27, 398, 6) // "reason"
     "result\0onNewGameRequested\0std::string\0"
     "hostPlayerName\0onNewGameRequestPlayerResponse\0"
     "onGameInitialization\0playerColor\0"
-    "onBoardReceived\0char[8][8]\0board\0"
-    "onYourMove\0status\0onGameEnded\0reason"
+    "onBoardReceived\0char*\0board\0onYourMove\0"
+    "status\0onGameEnded\0reason"
 };
 #undef QT_MOC_LITERAL
 
@@ -142,7 +142,7 @@ void CGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 7: _t->onNewGameRequested((*reinterpret_cast< std::string(*)>(_a[1]))); break;
         case 8: _t->onNewGameRequestPlayerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 9: _t->onGameInitialization((*reinterpret_cast< char(*)>(_a[1]))); break;
-        case 10: _t->onBoardReceived((*reinterpret_cast< char(*)[8][8]>(_a[1]))); break;
+        case 10: _t->onBoardReceived((*reinterpret_cast< char*(*)>(_a[1]))); break;
         case 11: _t->onYourMove((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 12: _t->onGameEnded((*reinterpret_cast< std::string(*)>(_a[1])),(*reinterpret_cast< std::string(*)>(_a[2]))); break;
         default: ;

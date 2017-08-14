@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalNewGameRequestResponse(int)), this, SLOT(onNewGameRequestPlayerResponse(int)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalNewGameRequested(std::string)), this, SLOT(onNewGameRequested(std::string)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalGameInitialization(char)), this, SLOT(onGameInitialization(char)));
-    connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalBoardReceived(char[8][8])), this, SLOT(onBoardReceived(char[8][8])));
+    connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalBoardReceived(char*)), this, SLOT(onBoardReceived(char*)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalGameEnded(std::string,std::string)), this, SLOT(onGameEnded(std::string,std::string)));
 
     connect(CGame::GetInstance(), SIGNAL(signalLogout()), this, SLOT(onLogout()));
@@ -122,6 +122,7 @@ void MainWindow::onStartNewGameServerResponse(int result)
 
 void MainWindow::onNewGameRequestPlayerResponse(int response)
 {
+    QApplication::restoreOverrideCursor();
     // Player has agreed to start the game
     if (response > 0)
     {
@@ -146,7 +147,7 @@ void MainWindow::onGameInitialization(char playerColor)
 
 }
 
-void MainWindow::onBoardReceived(char board[8][8])
+void MainWindow::onBoardReceived(char *board)
 {
 
 }
@@ -165,7 +166,7 @@ void MainWindow::onGameEnded(std::__cxx11::string result, std::__cxx11::string r
 void MainWindow::onLogout()
 {
     m_initializeLayout();
-    this->close();
+    this->hide();
     m_loginForm->show();
 }
 

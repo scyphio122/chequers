@@ -34,7 +34,7 @@ public slots:
 
     void onGameInitialization(char playerColor);
 
-    void onBoardReceived(char board[8][8]);
+    void onBoardReceived(char* board);
 
     void onGameEnded(std::string result, std::string reason);
 

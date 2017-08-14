@@ -30,16 +30,18 @@ public:
     {
         if (CGameRequestPopup->objectName().isEmpty())
             CGameRequestPopup->setObjectName(QStringLiteral("CGameRequestPopup"));
-        CGameRequestPopup->resize(400, 104);
+        CGameRequestPopup->resize(800, 100);
+        CGameRequestPopup->setMinimumSize(QSize(800, 100));
+        CGameRequestPopup->setMaximumSize(QSize(800, 100));
         buttonBox = new QDialogButtonBox(CGameRequestPopup);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));
-        buttonBox->setGeometry(QRect(50, 60, 321, 32));
+        buttonBox->setGeometry(QRect(50, 60, 691, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::No|QDialogButtonBox::Yes);
         buttonBox->setCenterButtons(true);
         lB_Text = new QLabel(CGameRequestPopup);
         lB_Text->setObjectName(QStringLiteral("lB_Text"));
-        lB_Text->setGeometry(QRect(40, 20, 331, 31));
+        lB_Text->setGeometry(QRect(40, 20, 721, 31));
 
         retranslateUi(CGameRequestPopup);
         QObject::connect(buttonBox, SIGNAL(accepted()), CGameRequestPopup, SLOT(accept()));

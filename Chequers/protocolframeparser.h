@@ -29,7 +29,7 @@ signals:
 
     void signalGameInitialization(char playerColor);
 
-    void signalBoardReceived(char board[8][8]);
+    void signalBoardReceived(char* board);
 
     void signalYourMove(bool status);
 

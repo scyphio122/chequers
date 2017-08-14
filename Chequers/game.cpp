@@ -29,7 +29,7 @@ CGame::CGame()
     connect(m_pParser, SIGNAL(signalNewGameRequestResponse(int)), this, SLOT(onNewGameRequestPlayerResponse(int)));
     connect(m_pParser, SIGNAL(signalNewGameRequested(std::string)), this, SLOT(onNewGameRequested(std::string)));
     connect(m_pParser, SIGNAL(signalGameInitialization(char)), this, SLOT(onGameInitialization(char)));
-    connect(m_pParser, SIGNAL(signalBoardReceived(char[8][8])), this, SLOT(onBoardReceived(char[8][8])));
+    connect(m_pParser, SIGNAL(signalBoardReceived(char*)), this, SLOT(onBoardReceived(char*)));
     connect(m_pParser, SIGNAL(signalYourMove(bool)), this, SLOT(onYourMove(bool)));
     connect(m_pParser, SIGNAL(signalGameEnded(std::string,std::string)), this, SLOT(onGameEnded(std::string,std::string)));
 
@@ -88,6 +88,7 @@ bool CGame::Login(std::string username, std::string password)
 
 bool CGame::RegisterUser(std::string username, std::string password)
 {
+
     if (m_state != E_GameState::E_NOT_INITIALIZED)
     {
         LOG_CRITICAL("Unexpected state. Is %s, should be %s", s_stateMap[m_state], s_stateMap[E_GameState::E_NOT_INITIALIZED]);
@@ -144,7 +145,7 @@ bool CGame::RespondToGameInvitation(bool accept)
         param = "0";
     }
 
-    frame.FormFrame(CWebProtocolFrame::E_ServerCommands::E_NEW_GAME_REQUEST_RESPONSE, param);
+    frame.FormFrame(CWebProtocolFrame::E_ServerCommands::E_NEW_GAME_REQUESTED, param);
 
     bool retval = m_SendFrame(frame);
 
@@ -206,14 +207,17 @@ bool CGame::Resign()
 
 void CGame::onLoginResponse(bool response)
 {
+
     if (response == 1)
     {
+        LOG_DBG("Logged in as %s", m_userName.c_str());
         m_loggedIn = true;
         m_changeState(E_GameState::E_LOGGED_IN);
         GetPlayersList();
     }
     else
     {
+        LOG_DBG("Login failed");
         m_userName = "";
         m_loggedIn = false;
         m_changeState(E_GameState::E_NOT_INITIALIZED);
@@ -223,10 +227,12 @@ void CGame::onLoginResponse(bool response)
 void CGame::onUserRegistrationResponse(bool response)
 {
     // Probably this signal is useful for GUI only
+    LOG_DBG("User registration %s", response? "SUCCESS" : "FAILURE");
 }
 
 void CGame::onGetPlayersListResponse(QList<CPlayer> playersList)
 {
+    LOG_DBG("List of players received. List size: %d", playersList.size());
     m_playersList = playersList;
 }
 
@@ -234,7 +240,10 @@ void CGame::onStartNewGameServerResponse(int result)
 {
     //   If request was successfully passed to the player
     if (result > 0)
+    {
+        LOG_DBG("New game successfully requested");
         m_changeState(E_GameState::E_WAITING_FOR_ACCEPT);
+    }
     else   // If player is no longer available
         LOG_CRITICAL("Player not available");
 }
@@ -246,7 +255,7 @@ void CGame::onNewGameRequested(std::__cxx11::string hostPlayerName)
 
 void CGame::onNewGameRequestPlayerResponse(int response)
 {
-    LOG_DBG("Player has %s the invitation", response? "accepted" : "declined");
+    LOG_DBG("Player has %s the invitation", response? "ACCEPTED" : "DECLINED");
 
     if (response > 0)
     {
@@ -260,20 +269,21 @@ void CGame::onNewGameRequestPlayerResponse(int response)
 
 void CGame::onGameInitialization(char playerColor)
 {
+    LOG_DBG("Game initialized. Player color is %c", playerColor);
     m_userColor = (E_SideColor)playerColor;
     m_changeState(E_GameState::E_PLAYING_GAME);
 }
 
-void CGame::onBoardReceived(char board[8][8])
+void CGame::onBoardReceived(char *board)
 {
     memcpy(m_board, board, 64);
-
     emit signalRedrawBoard();
 }
 
 void CGame::onYourMove(bool status)
 {
     // TODO: TO FILL
+    LOG_DBG("My move");
 }
 
 void CGame::onGameEnded(std::__cxx11::string result, std::__cxx11::string reason)
