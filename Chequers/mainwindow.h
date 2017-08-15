@@ -6,6 +6,7 @@
 #include "player.h"
 #include "loginform.h"
 #include "game.h"
+#include <QTableWidgetItem>
 
 class CLoginForm;
 
@@ -42,6 +43,8 @@ public slots:
 
     void onGameStateChanged(CGame::E_GameState newState);
 
+    void onRedrawRequest();
+
 private slots:
     void on_tW_availablePlayers_doubleClicked(const QModelIndex &index);
 
@@ -51,11 +54,15 @@ private slots:
 
     void on_pB_requestNewGame_pressed();
 
+    void on_tW_board_itemClicked(QTableWidgetItem *item);
+
 private:
 
     void m_startNewGame(std::string userName);
 
     void m_initializeLayout();
+
+    void m_initializeBoard();
 
     Ui::MainWindow *ui;
 

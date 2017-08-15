@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[28];
-    char stringdata0[441];
+    QByteArrayData data[32];
+    char stringdata0[504];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,11 +55,15 @@ QT_MOC_LITERAL(19, 271, 8), // "onLogout"
 QT_MOC_LITERAL(20, 280, 18), // "onGameStateChanged"
 QT_MOC_LITERAL(21, 299, 18), // "CGame::E_GameState"
 QT_MOC_LITERAL(22, 318, 8), // "newState"
-QT_MOC_LITERAL(23, 327, 36), // "on_tW_availablePlayers_double..."
-QT_MOC_LITERAL(24, 364, 5), // "index"
-QT_MOC_LITERAL(25, 370, 20), // "on_pB_logout_pressed"
-QT_MOC_LITERAL(26, 391, 20), // "on_pB_resign_pressed"
-QT_MOC_LITERAL(27, 412, 28) // "on_pB_requestNewGame_pressed"
+QT_MOC_LITERAL(23, 327, 15), // "onRedrawRequest"
+QT_MOC_LITERAL(24, 343, 36), // "on_tW_availablePlayers_double..."
+QT_MOC_LITERAL(25, 380, 5), // "index"
+QT_MOC_LITERAL(26, 386, 20), // "on_pB_logout_pressed"
+QT_MOC_LITERAL(27, 407, 20), // "on_pB_resign_pressed"
+QT_MOC_LITERAL(28, 428, 28), // "on_pB_requestNewGame_pressed"
+QT_MOC_LITERAL(29, 457, 23), // "on_tW_board_itemClicked"
+QT_MOC_LITERAL(30, 481, 17), // "QTableWidgetItem*"
+QT_MOC_LITERAL(31, 499, 4) // "item"
 
     },
     "MainWindow\0onGetPlayersListResponse\0"
@@ -70,10 +74,12 @@ QT_MOC_LITERAL(27, 412, 28) // "on_pB_requestNewGame_pressed"
     "response\0onGameInitialization\0playerColor\0"
     "onBoardReceived\0char*\0board\0onGameEnded\0"
     "reason\0onLogout\0onGameStateChanged\0"
-    "CGame::E_GameState\0newState\0"
+    "CGame::E_GameState\0newState\0onRedrawRequest\0"
     "on_tW_availablePlayers_doubleClicked\0"
     "index\0on_pB_logout_pressed\0"
-    "on_pB_resign_pressed\0on_pB_requestNewGame_pressed"
+    "on_pB_resign_pressed\0on_pB_requestNewGame_pressed\0"
+    "on_tW_board_itemClicked\0QTableWidgetItem*\0"
+    "item"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,7 +89,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -91,19 +97,21 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   79,    2, 0x0a /* Public */,
-       5,    1,   82,    2, 0x0a /* Public */,
-       7,    1,   85,    2, 0x0a /* Public */,
-      10,    1,   88,    2, 0x0a /* Public */,
-      12,    1,   91,    2, 0x0a /* Public */,
-      14,    1,   94,    2, 0x0a /* Public */,
-      17,    2,   97,    2, 0x0a /* Public */,
-      19,    0,  102,    2, 0x0a /* Public */,
-      20,    1,  103,    2, 0x0a /* Public */,
-      23,    1,  106,    2, 0x08 /* Private */,
-      25,    0,  109,    2, 0x08 /* Private */,
-      26,    0,  110,    2, 0x08 /* Private */,
-      27,    0,  111,    2, 0x08 /* Private */,
+       1,    1,   89,    2, 0x0a /* Public */,
+       5,    1,   92,    2, 0x0a /* Public */,
+       7,    1,   95,    2, 0x0a /* Public */,
+      10,    1,   98,    2, 0x0a /* Public */,
+      12,    1,  101,    2, 0x0a /* Public */,
+      14,    1,  104,    2, 0x0a /* Public */,
+      17,    2,  107,    2, 0x0a /* Public */,
+      19,    0,  112,    2, 0x0a /* Public */,
+      20,    1,  113,    2, 0x0a /* Public */,
+      23,    0,  116,    2, 0x0a /* Public */,
+      24,    1,  117,    2, 0x08 /* Private */,
+      26,    0,  120,    2, 0x08 /* Private */,
+      27,    0,  121,    2, 0x08 /* Private */,
+      28,    0,  122,    2, 0x08 /* Private */,
+      29,    1,  123,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -115,10 +123,12 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, 0x80000000 | 8, 0x80000000 | 8,    6,   18,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 21,   22,
-    QMetaType::Void, QMetaType::QModelIndex,   24,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QModelIndex,   25,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 30,   31,
 
        0        // eod
 };
@@ -138,10 +148,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 6: _t->onGameEnded((*reinterpret_cast< std::string(*)>(_a[1])),(*reinterpret_cast< std::string(*)>(_a[2]))); break;
         case 7: _t->onLogout(); break;
         case 8: _t->onGameStateChanged((*reinterpret_cast< CGame::E_GameState(*)>(_a[1]))); break;
-        case 9: _t->on_tW_availablePlayers_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 10: _t->on_pB_logout_pressed(); break;
-        case 11: _t->on_pB_resign_pressed(); break;
-        case 12: _t->on_pB_requestNewGame_pressed(); break;
+        case 9: _t->onRedrawRequest(); break;
+        case 10: _t->on_tW_availablePlayers_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 11: _t->on_pB_logout_pressed(); break;
+        case 12: _t->on_pB_resign_pressed(); break;
+        case 13: _t->on_pB_requestNewGame_pressed(); break;
+        case 14: _t->on_tW_board_itemClicked((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -172,13 +184,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 15)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 13;
+        _id -= 15;
     }
     return _id;
 }

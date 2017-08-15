@@ -42,6 +42,10 @@ public:
 
     char* GetBoard();
 
+    E_SideColor GetSide();
+
+    char GetKingColor();
+
     std::string GetUserName();
 
     /* GAME API */
@@ -107,6 +111,8 @@ private:
     static std::map<E_GameState, const char*> s_stateMap;
 
     E_SideColor m_userColor;
+
+    char m_userKingColor;
 
     QList<CPlayer> m_playersList;
 

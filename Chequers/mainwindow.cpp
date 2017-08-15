@@ -6,6 +6,10 @@
 #include <QMessageBox>
 #include "logger.h"
 #include "gamerequestpopup.h"
+#include <QColor>
+
+#define DARK_FIELD_COLOR QColor::fromRgb(112, 82, 0)
+#define LIGHT_FIELD_COLOR QColor::fromRgb(252, 233, 164)
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tW_availablePlayers->setHorizontalHeaderItem(0, new QTableWidgetItem("User name"));
     ui->tW_availablePlayers->setHorizontalHeaderItem(1, new QTableWidgetItem("Status"));
 
+    m_initializeLayout();
+
     connect(CGame::GetInstance(), SIGNAL(signalStateChanged(CGame::E_GameState)), this, SLOT(onGameStateChanged(CGame::E_GameState)));
 
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalListOfPlayersReceived(QList<CPlayer>)), this, SLOT(onGetPlayersListResponse(QList<CPlayer>)));
@@ -30,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalBoardReceived(char*)), this, SLOT(onBoardReceived(char*)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalGameEnded(std::string,std::string)), this, SLOT(onGameEnded(std::string,std::string)));
 
+    connect(CGame::GetInstance(), SIGNAL(signalRedrawBoard()), this, SLOT(onRedrawRequest()));
     connect(CGame::GetInstance(), SIGNAL(signalLogout()), this, SLOT(onLogout()));
 }
 
@@ -50,6 +57,42 @@ void MainWindow::m_initializeLayout()
     ui->gB_AvailablePlayers->setEnabled(true);
     ui->gB_board->setEnabled(false);
     ui->pB_logout->setEnabled(true);
+
+    m_initializeBoard();
+}
+
+void MainWindow::m_initializeBoard()
+{
+    QTableWidget* tw = ui->tW_board;
+
+    for(int i = 0; i<tw->columnCount(); ++i)
+    {
+        for(int j = 0; j<tw->rowCount(); ++j)
+        {
+            if ((i+j) % 2 == 0)
+            {
+                QTableWidgetItem* item = tw->item(i, j);
+                if (item == nullptr)
+                {
+                    item = new QTableWidgetItem();
+                    tw->setItem(i, j, item);
+                }
+
+                item->setBackgroundColor(LIGHT_FIELD_COLOR);
+            }
+            else
+            {
+                QTableWidgetItem* item = tw->item(i, j);
+                if (item == nullptr)
+                {
+                    item = new QTableWidgetItem();
+                    tw->setItem(i, j, item);
+                }
+
+                item->setBackgroundColor(DARK_FIELD_COLOR);
+            }
+        }
+    }
 }
 
 void MainWindow::onGameStateChanged(CGame::E_GameState newState)
@@ -153,6 +196,44 @@ void MainWindow::onBoardReceived(char *board)
 
 }
 
+void MainWindow::onRedrawRequest()
+{
+    char board[8][8];
+    memcpy((char*)board, CGame::GetInstance()->GetBoard(), 64);
+
+    QTableWidget* tw = ui->tW_board;
+    for (int row = 0; row < 8; ++row)
+    {
+        for (int col = 0; col < 8; ++col)
+        {
+            switch (board[row][col])
+            {
+                case 'B':
+                {
+                    tw->item(row, col)->setText(QString(board[row][col]));
+                }break;
+                case 'C':
+                {
+                    tw->item(row, col)->setText(QString(board[row][col]));
+                }break;
+                case 'D':
+                {
+                    tw->item(row, col)->setText(QString(board[row][col]));
+                }break;
+                case 'E':
+                {
+                    tw->item(row, col)->setText(QString(board[row][col]));
+                }break;
+                case 'O':
+                {
+                    tw->item(row, col)->setText("");
+                }break;
+            }
+        }
+    }
+
+}
+
 void MainWindow::onGameEnded(std::__cxx11::string result, std::__cxx11::string reason)
 {
     QMessageBox box;
@@ -212,4 +293,46 @@ void MainWindow::on_pB_requestNewGame_pressed()
     int row = selectedItems[0]->row();
     std::string userName = ui->tW_availablePlayers->item(row, 0)->text().toStdString();
     m_startNewGame(userName);
+}
+
+void MainWindow::on_tW_board_itemClicked(QTableWidgetItem *item)
+{
+    static bool isPawnSelected = false;
+    static int xSelected, ySelected;
+
+    // Select/unselect pawn to move
+    if (item->text().toStdString()[0] == (char)CGame::GetInstance()->GetSide() ||
+            item->text().toStdString()[0] == CGame::GetInstance()->GetKingColor())
+    {
+        if (!isPawnSelected)
+        {
+            item->setSelected(true);
+            isPawnSelected = true;
+            xSelected = item->column();
+            ySelected = item->row();
+        }
+        else
+        {
+            if (item->row() == ySelected && item->column() == xSelected)
+            {
+                item->setSelected(false);
+                isPawnSelected = false;
+                xSelected = -1;
+                ySelected = -1;
+            }
+        }
+        return;
+    }
+
+    // Select the place to move the pawn
+    if (isPawnSelected)
+    {
+        if (item->text().toStdString()[0] != (char)CGame::GetInstance()->GetSide() &&
+            item->text().toStdString()[0] != CGame::GetInstance()->GetKingColor())
+        {
+            CGame::GetInstance()->MakeMove(xSelected, ySelected, item->column(), item->row());
+        }
+    }
+
+
 }

@@ -61,6 +61,19 @@ char* CGame::GetBoard()
     return &m_board[0][0];
 }
 
+CGame::E_SideColor CGame::GetSide()
+{
+    return m_userColor;
+}
+
+char CGame::GetKingColor()
+{
+    if (m_userColor == CGame::E_SideColor::E_WHITE)
+        return 'D';
+    else
+        return 'E';
+}
+
 std::string CGame::GetUserName()
 {
     return m_userName;
@@ -296,6 +309,7 @@ void CGame::onGameInitialization(char playerColor)
 void CGame::onBoardReceived(char *board)
 {
     memcpy(m_board, board, 64);
+    delete board;
     emit signalRedrawBoard();
 }
 

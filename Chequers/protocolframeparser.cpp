@@ -100,8 +100,8 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
             {
                 if (params.size() == 1)
                 {
-                    char board[8][8];
-                    memcpy(board, params[0].data(), sizeof(board));
+                    char* board = new char[64];
+                    memcpy(board, params[0].data(), 64);
                     emit signalBoardReceived((char*)board);
                 }
                 else
