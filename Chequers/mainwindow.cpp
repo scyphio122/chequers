@@ -11,8 +11,8 @@
 #include <QImage>
 
 
-#define DARK_FIELD_COLOR QColor::fromRgb(112, 82, 0)
-#define LIGHT_FIELD_COLOR QColor::fromRgb(252, 233, 164)
+#define DARK_FIELD_COLOR    QColor::fromRgb(112, 82, 0)
+#define LIGHT_FIELD_COLOR   QColor::fromRgb(252, 233, 164)
 #define WHITE_PAWN          'B'
 #define DARK_PAWN           'C'
 #define WHITE_QUEEN         'D'
@@ -238,18 +238,23 @@ void MainWindow::onRedrawRequest()
                 case WHITE_PAWN:
                 {
                     tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[WHITE_PAWN]);
+                    tw->item(row, col)->setText(QString(WHITE_PAWN));
+                    tw->item(row,col)->da
                 }break;
                 case DARK_PAWN:
                 {
                     tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[DARK_PAWN]);
+                    tw->item(row, col)->setText(QString(DARK_PAWN));
                 }break;
                 case WHITE_QUEEN:
                 {
                     tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[WHITE_QUEEN]);
+                    tw->item(row, col)->setText(QString(WHITE_QUEEN));
                 }break;
                 case DARK_QUEEN:
                 {
                     tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[DARK_QUEEN]);
+                    tw->item(row, col)->setText(QString(DARK_QUEEN));
                 }break;
                 case EMPTY_FIELD:
                 {
@@ -258,7 +263,6 @@ void MainWindow::onRedrawRequest()
             }
         }
     }
-
 }
 
 void MainWindow::onGameEnded(std::__cxx11::string result, std::__cxx11::string reason)
@@ -360,6 +364,4 @@ void MainWindow::on_tW_board_itemClicked(QTableWidgetItem *item)
             CGame::GetInstance()->MakeMove(xSelected, ySelected, item->column(), item->row());
         }
     }
-
-
 }

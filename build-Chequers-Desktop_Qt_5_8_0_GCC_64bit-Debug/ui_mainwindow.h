@@ -86,6 +86,10 @@ public:
             tW_board->setColumnCount(8);
         if (tW_board->rowCount() < 8)
             tW_board->setRowCount(8);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        __qtablewidgetitem->setTextAlignment(Qt::AlignCenter);
+        __qtablewidgetitem->setFlags(Qt::ItemIsEnabled);
+        tW_board->setItem(0, 0, __qtablewidgetitem);
         tW_board->setObjectName(QStringLiteral("tW_board"));
         tW_board->setGeometry(QRect(30, 80, 744, 744));
         tW_board->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -93,7 +97,11 @@ public:
         tW_board->setAutoScroll(false);
         tW_board->setAutoScrollMargin(0);
         tW_board->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        tW_board->setSelectionMode(QAbstractItemView::SingleSelection);
+        tW_board->setTabKeyNavigation(false);
+        tW_board->setProperty("showDropIndicator", QVariant(false));
+        tW_board->setDragDropOverwriteMode(false);
+        tW_board->setSelectionMode(QAbstractItemView::NoSelection);
+        tW_board->setTextElideMode(Qt::ElideMiddle);
         tW_board->setShowGrid(true);
         tW_board->setWordWrap(true);
         tW_board->setRowCount(8);
@@ -136,6 +144,11 @@ public:
         pB_requestNewGame->setText(QApplication::translate("MainWindow", "Request New Game", Q_NULLPTR));
         pB_logout->setText(QApplication::translate("MainWindow", "Log Out", Q_NULLPTR));
         gB_board->setTitle(QString());
+
+        const bool __sortingEnabled = tW_board->isSortingEnabled();
+        tW_board->setSortingEnabled(false);
+        tW_board->setSortingEnabled(__sortingEnabled);
+
         pB_resign->setText(QApplication::translate("MainWindow", "Resign", Q_NULLPTR));
     } // retranslateUi
 
