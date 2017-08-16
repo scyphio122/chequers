@@ -57,9 +57,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalGameInitialization(char)), this, SLOT(onGameInitialization(char)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalBoardReceived(char*)), this, SLOT(onBoardReceived(char*)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalGameEnded(std::string,std::string)), this, SLOT(onGameEnded(std::string,std::string)));
+    connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalYourMove(bool)), this, SLOT(onYourMove(bool)));
 
     connect(CGame::GetInstance(), SIGNAL(signalRedrawBoard()), this, SLOT(onRedrawRequest()));
     connect(CGame::GetInstance(), SIGNAL(signalLogout()), this, SLOT(onLogout()));
+    connect(CGame::GetInstance(), SIGNAL(signalMoveMade()), this, SLOT(onMoveAccepted()));
+    connect(CGame::GetInstance(), SIGNAL(signalMoveDiscarded()), this, SLOT(onMoveNotAccepted()));
+
 }
 
 MainWindow::~MainWindow()
@@ -214,8 +218,23 @@ void MainWindow::onNewGameRequested(std::__cxx11::string hostPlayerName)
 
 void MainWindow::onGameInitialization(char playerColor)
 {
+    QString text;
+    QString turnText;
+    if (playerColor == (char)CGame::E_SideColor::E_BLACK)
+    {
+        text = "BLACK";
+        turnText = "OPPONENT's MOVE!";
+    }
+    else
+    {
+        text = "WHITE";
+        turnText = "YOUR MOVE!";
+    }
+
     ui->gB_board->setEnabled(true);
     ui->gB_AvailablePlayers->setEnabled(false);
+    ui->lE_yourColor->setText(text);
+    ui->lE_whoseTurn->setText(turnText);
 }
 
 void MainWindow::onBoardReceived(char *board)
@@ -239,7 +258,7 @@ void MainWindow::onRedrawRequest()
                 {
                     tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[WHITE_PAWN]);
                     tw->item(row, col)->setText(QString(WHITE_PAWN));
-                    tw->item(row,col)->da
+//                    tw->item(row,col)->da
                 }break;
                 case DARK_PAWN:
                 {
@@ -259,6 +278,7 @@ void MainWindow::onRedrawRequest()
                 case EMPTY_FIELD:
                 {
                     tw->item(row, col)->setData(Qt::DecorationRole, " ");
+                    tw->item(row, col)->setText(" ");
                 }break;
             }
         }
@@ -284,6 +304,29 @@ void MainWindow::onLogout()
     m_loginForm->show();
 }
 
+void MainWindow::onYourMove(bool)
+{
+    LOG_DBG(" ");
+    ui->lE_whoseTurn->setText("YOUR MOVE!");
+}
+
+void MainWindow::onMoveAccepted()
+{
+    LOG_DBG(" ");
+    ui->lE_whoseTurn->setText("OPPONENT's MOVE!");
+    ui->tW_board->item(m_ySelected, m_xSelected)->setSelected(false);
+    m_isPawnSelected = false;
+    m_xSelected = -1;
+    m_ySelected = -1;
+}
+
+void MainWindow::onMoveNotAccepted()
+{
+    QMessageBox box;
+    box.setText("The move you're trying to make is not acceptable. Try again!");
+    box.setIcon(QMessageBox::Warning);
+    box.exec();
+}
 
 void MainWindow::m_startNewGame(std::__cxx11::string userName)
 {
@@ -328,40 +371,43 @@ void MainWindow::on_pB_requestNewGame_pressed()
 
 void MainWindow::on_tW_board_itemClicked(QTableWidgetItem *item)
 {
-    static bool isPawnSelected = false;
-    static int xSelected, ySelected;
+    // Do not allow to do anything while opponent's turn
+    if (!CGame::GetInstance()->IsMyTurn())
+        return;
+
+    // Select the place to move the pawn
+    if (m_isPawnSelected)
+    {
+        if (item->text()[0] != (char)CGame::GetInstance()->GetSide() &&
+            item->text()[0] != CGame::GetInstance()->GetKingColor())
+        {
+            CGame::GetInstance()->MakeMove(m_xSelected, m_ySelected, item->column(), item->row());
+        }
+    }
 
     // Select/unselect pawn to move
-    if (item->text().toStdString()[0] == (char)CGame::GetInstance()->GetSide() ||
-            item->text().toStdString()[0] == CGame::GetInstance()->GetKingColor())
+    if (item->text()[0] == (char)CGame::GetInstance()->GetSide() ||
+        item->text()[0] == CGame::GetInstance()->GetKingColor() ||
+        item->text()[0] == EMPTY_FIELD)
     {
-        if (!isPawnSelected)
+        if (item->text()[0] == EMPTY_FIELD)
+            return;
+
+        if (!m_isPawnSelected)
         {
             item->setSelected(true);
-            isPawnSelected = true;
-            xSelected = item->column();
-            ySelected = item->row();
+            m_isPawnSelected = true;
+            m_xSelected = item->column();
+            m_ySelected = item->row();
         }
         else
         {
-            if (item->row() == ySelected && item->column() == xSelected)
+            if (item->row() == m_ySelected && item->column() == m_xSelected)
             {
                 item->setSelected(false);
-                isPawnSelected = false;
-                xSelected = -1;
-                ySelected = -1;
+                m_isPawnSelected = false;
             }
         }
         return;
-    }
-
-    // Select the place to move the pawn
-    if (isPawnSelected)
-    {
-        if (item->text().toStdString()[0] != (char)CGame::GetInstance()->GetSide() &&
-            item->text().toStdString()[0] != CGame::GetInstance()->GetKingColor())
-        {
-            CGame::GetInstance()->MakeMove(xSelected, ySelected, item->column(), item->row());
-        }
     }
 }

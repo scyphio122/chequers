@@ -17,6 +17,8 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLCDNumber>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -40,6 +42,10 @@ public:
     QTableWidget *tW_board;
     QLCDNumber *lcd_time;
     QPushButton *pB_resign;
+    QLabel *label;
+    QLineEdit *lE_yourColor;
+    QLineEdit *lE_whoseTurn;
+    QLabel *label_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -120,6 +126,20 @@ public:
         pB_resign = new QPushButton(gB_board);
         pB_resign->setObjectName(QStringLiteral("pB_resign"));
         pB_resign->setGeometry(QRect(420, 30, 241, 31));
+        label = new QLabel(gB_board);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(20, 20, 121, 16));
+        lE_yourColor = new QLineEdit(gB_board);
+        lE_yourColor->setObjectName(QStringLiteral("lE_yourColor"));
+        lE_yourColor->setGeometry(QRect(20, 40, 113, 22));
+        lE_yourColor->setReadOnly(true);
+        lE_whoseTurn = new QLineEdit(gB_board);
+        lE_whoseTurn->setObjectName(QStringLiteral("lE_whoseTurn"));
+        lE_whoseTurn->setGeometry(QRect(200, 40, 201, 22));
+        lE_whoseTurn->setReadOnly(true);
+        label_2 = new QLabel(gB_board);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(200, 20, 59, 14));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -150,6 +170,8 @@ public:
         tW_board->setSortingEnabled(__sortingEnabled);
 
         pB_resign->setText(QApplication::translate("MainWindow", "Resign", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "You play with:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MainWindow", "Turn:", Q_NULLPTR));
     } // retranslateUi
 
 };

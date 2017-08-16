@@ -48,6 +48,8 @@ public:
 
     std::string GetUserName();
 
+    bool IsMyTurn();
+
     /* GAME API */
 
     bool Login(std::string username, std::string password);
@@ -75,6 +77,7 @@ signals:
 
     void signalMoveMade();
 
+    void signalMoveDiscarded();
 public slots:
     void onLoginResponse(bool response);
 
@@ -117,6 +120,8 @@ private:
     QList<CPlayer> m_playersList;
 
     bool m_loggedIn;
+
+    bool m_isMyTurn;
 
     std::string m_userName;
 

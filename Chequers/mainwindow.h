@@ -41,9 +41,15 @@ public slots:
 
     void onLogout();
 
+    void onYourMove(bool);
+
     void onGameStateChanged(CGame::E_GameState newState);
 
     void onRedrawRequest();
+
+    void onMoveAccepted();
+
+    void onMoveNotAccepted();
 
 private slots:
     void on_tW_availablePlayers_doubleClicked(const QModelIndex &index);
@@ -67,6 +73,10 @@ private:
     Ui::MainWindow *ui;
 
     CLoginForm* m_loginForm;
+
+    int m_xSelected, m_ySelected;
+
+    bool m_isPawnSelected = false;
 };
 
 #endif // MAINWINDOW_H

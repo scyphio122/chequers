@@ -78,6 +78,12 @@ std::string CGame::GetUserName()
 {
     return m_userName;
 }
+
+bool CGame::IsMyTurn()
+{
+    return m_isMyTurn;
+}
+
 /*
  *  ###############################################
  *   ################  GAME API  ###################
@@ -303,6 +309,15 @@ void CGame::onGameInitialization(char playerColor)
 {
     LOG_DBG("Game initialized. Player color is %c", playerColor);
     m_userColor = (E_SideColor)playerColor;
+    if (playerColor == (char)E_SideColor::E_WHITE)
+    {
+        m_isMyTurn = true;
+    }
+    else
+    {
+        m_isMyTurn = false;
+    }
+
     m_changeState(E_GameState::E_PLAYING_GAME);
 }
 
@@ -317,6 +332,7 @@ void CGame::onYourMove(bool status)
 {
     // TODO: TO FILL
     LOG_DBG("My move");
+    m_isMyTurn = true;
 }
 
 void CGame::onGameEnded(std::__cxx11::string result, std::__cxx11::string reason)
@@ -331,12 +347,15 @@ void CGame::onMakeMoveServerResponse(int result)
     LOG_DBG("Move is %s", result? "ACCEPTED" : "FORBIDDEN");
     if (result > 0)
     {
-        // Do nothing - action is done when E_BOARD is received
+        m_isMyTurn = false;
+        emit signalMoveMade();
     }
     else
     {
         // Copy back the current board to the buffer
         memcpy(m_bufferedBoard, m_board, 64);
+
+        emit signalMoveDiscarded();
         return;
     }
 }

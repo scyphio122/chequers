@@ -216,7 +216,7 @@ void CProtocolFrameParser::m_parseFrame(CWebProtocolFrame& frame)
 
         case CWebProtocolFrame::E_ServerCommands::E_YOUR_MOVE:
             {
-
+                emit signalYourMove(true);
             }break;
 
         case CWebProtocolFrame::E_ServerCommands::E_ERROR:
