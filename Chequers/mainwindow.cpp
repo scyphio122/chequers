@@ -7,9 +7,21 @@
 #include "logger.h"
 #include "gamerequestpopup.h"
 #include <QColor>
+#include <map>
+#include <QImage>
+
 
 #define DARK_FIELD_COLOR QColor::fromRgb(112, 82, 0)
 #define LIGHT_FIELD_COLOR QColor::fromRgb(252, 233, 164)
+#define WHITE_PAWN          'B'
+#define DARK_PAWN           'C'
+#define WHITE_QUEEN         'D'
+#define DARK_QUEEN          'E'
+#define EMPTY_FIELD         'O'
+
+#define SIZE_OFFSET         5
+
+static std::map<char, QImage*> s_pawnImagesMap;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,6 +35,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tW_availablePlayers->insertColumn(1);
     ui->tW_availablePlayers->setHorizontalHeaderItem(0, new QTableWidgetItem("User name"));
     ui->tW_availablePlayers->setHorizontalHeaderItem(1, new QTableWidgetItem("Status"));
+
+    QImage* whitePawn = new QImage(QImage("white_pawn_transparent.png").scaled(ui->tW_board->columnWidth(0) - SIZE_OFFSET, ui->tW_board->rowHeight(0) - SIZE_OFFSET));
+    QImage* darkPawn = new QImage(QImage("dark_pawn_transparent.png").scaled(ui->tW_board->columnWidth(0) - SIZE_OFFSET, ui->tW_board->rowHeight(0) - SIZE_OFFSET));
+    QImage* whiteQueen = new QImage(QImage("white_pawn_transparent_queen.png").scaled(ui->tW_board->columnWidth(0) - SIZE_OFFSET, ui->tW_board->rowHeight(0) - SIZE_OFFSET));
+    QImage* darkQueen = new QImage(QImage("dark_pawn_transparent_queen.png").scaled(ui->tW_board->columnWidth(0) - SIZE_OFFSET, ui->tW_board->rowHeight(0) - SIZE_OFFSET));
+
+    s_pawnImagesMap.insert(std::pair<char, QImage*>(WHITE_PAWN, whitePawn));
+    s_pawnImagesMap.insert(std::pair<char, QImage*>(DARK_PAWN, darkPawn));
+    s_pawnImagesMap.insert(std::pair<char, QImage*>(WHITE_QUEEN, whiteQueen));
+    s_pawnImagesMap.insert(std::pair<char, QImage*>(DARK_QUEEN, darkQueen));
 
     m_initializeLayout();
 
@@ -43,6 +65,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     ui->tW_availablePlayers->clear();
+    delete s_pawnImagesMap[WHITE_PAWN];
+    delete s_pawnImagesMap[DARK_PAWN];
+    delete s_pawnImagesMap[WHITE_QUEEN];
+    delete s_pawnImagesMap[DARK_QUEEN];
+
     delete ui;
 }
 
@@ -208,25 +235,25 @@ void MainWindow::onRedrawRequest()
         {
             switch (board[row][col])
             {
-                case 'B':
+                case WHITE_PAWN:
                 {
-                    tw->item(row, col)->setText(QString(board[row][col]));
+                    tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[WHITE_PAWN]);
                 }break;
-                case 'C':
+                case DARK_PAWN:
                 {
-                    tw->item(row, col)->setText(QString(board[row][col]));
+                    tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[DARK_PAWN]);
                 }break;
-                case 'D':
+                case WHITE_QUEEN:
                 {
-                    tw->item(row, col)->setText(QString(board[row][col]));
+                    tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[WHITE_QUEEN]);
                 }break;
-                case 'E':
+                case DARK_QUEEN:
                 {
-                    tw->item(row, col)->setText(QString(board[row][col]));
+                    tw->item(row, col)->setData(Qt::DecorationRole, *s_pawnImagesMap[DARK_QUEEN]);
                 }break;
-                case 'O':
+                case EMPTY_FIELD:
                 {
-                    tw->item(row, col)->setText("");
+                    tw->item(row, col)->setData(Qt::DecorationRole, " ");
                 }break;
             }
         }
