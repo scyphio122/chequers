@@ -5,7 +5,7 @@
 #include <QMutex>
 #include "webprotocolframe.h"
 #include "protocolframeparser.h"
-
+#include <QTimer>
 
 class CGame : public QObject
 {
@@ -101,6 +101,8 @@ public slots:
 
     void onMakeMoveServerResponse(int result);
 
+    void onRefreshPlayersTimerTimeout();
+
 private:
 
     CGame();
@@ -134,6 +136,10 @@ private:
     QThread* m_pThread;
 
     QMutex* m_pMutex;
+
+    QTimer* m_pPlayersListRefreshTimer;
+
+    const int m_playerListRefreshTimerTimeoutMs = 1000;
 };
 
 #endif // CGAME_H

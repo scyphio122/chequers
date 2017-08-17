@@ -22,6 +22,7 @@ CGame::CGame()
     m_state = E_GameState::E_NOT_INITIALIZED;
 
     m_pParser = CProtocolFrameParser::GetInstance();
+    m_pPlayersListRefreshTimer = new QTimer();
 
     connect(m_pParser, SIGNAL(signalLoginRetval(bool)), this, SLOT(onLoginResponse(bool)));
     connect(m_pParser, SIGNAL(signalRegisterRetval(bool)), this, SLOT(onUserRegistrationResponse(bool)));
@@ -37,12 +38,18 @@ CGame::CGame()
 
     connect(CWebManager::GetInstance(), SIGNAL(signalDataAvailable(QByteArray)), m_pParser, SLOT(Parse(QByteArray)));
 
+    connect(m_pPlayersListRefreshTimer, SIGNAL(timeout()), this, SLOT(onRefreshPlayersTimerTimeout()));
+
+
     m_pMutex = new QMutex(QMutex::Recursive);
 
     m_pThread = new QThread();
     connect(this, SIGNAL(destroyed(QObject*)), m_pThread, SLOT(deleteLater()));
     this->moveToThread(m_pThread);
     m_pThread->start();
+
+    m_pPlayersListRefreshTimer->setSingleShot(false);
+    m_pPlayersListRefreshTimer->setInterval(m_playerListRefreshTimerTimeoutMs);
 }
 
 CGame::~CGame()
@@ -252,6 +259,7 @@ void CGame::onLoginResponse(bool response)
         m_loggedIn = true;
         m_changeState(E_GameState::E_LOGGED_IN);
         GetPlayersList();
+        m_pPlayersListRefreshTimer->start(m_playerListRefreshTimerTimeoutMs);
     }
     else
     {
@@ -309,6 +317,8 @@ void CGame::onGameInitialization(char playerColor)
 {
     LOG_DBG("Game initialized. Player color is %c", playerColor);
     m_userColor = (E_SideColor)playerColor;
+    m_pPlayersListRefreshTimer->stop();
+
     if (playerColor == (char)E_SideColor::E_WHITE)
     {
         m_isMyTurn = true;
@@ -340,6 +350,7 @@ void CGame::onGameEnded(std::__cxx11::string result, std::__cxx11::string reason
     LOG_DBG("Game has ended. You %s! Reason for game end is %s", result.c_str(), reason.c_str());
     m_changeState(E_GameState::E_LOGGED_IN);
     GetPlayersList();
+    m_pPlayersListRefreshTimer->start();
 }
 
 void CGame::onMakeMoveServerResponse(int result)
@@ -358,6 +369,11 @@ void CGame::onMakeMoveServerResponse(int result)
         emit signalMoveDiscarded();
         return;
     }
+}
+
+void CGame::onRefreshPlayersTimerTimeout()
+{
+    GetPlayersList();
 }
 
 /*
