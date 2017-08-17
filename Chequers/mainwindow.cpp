@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(CGame::GetInstance(), SIGNAL(signalStateChanged(CGame::E_GameState)), this, SLOT(onGameStateChanged(CGame::E_GameState)));
 
+    connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalLoginRetval(bool)), this, SLOT(onLogin(bool)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalListOfPlayersReceived(QList<CPlayer>)), this, SLOT(onGetPlayersListResponse(QList<CPlayer>)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalNewGameRequestPassed(int)), this, SLOT(onStartNewGameServerResponse(int)));
     connect(CProtocolFrameParser::GetInstance(), SIGNAL(signalNewGameRequestResponse(int)), this, SLOT(onNewGameRequestPlayerResponse(int)));
@@ -64,6 +65,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(CGame::GetInstance(), SIGNAL(signalMoveMade()), this, SLOT(onMoveAccepted()));
     connect(CGame::GetInstance(), SIGNAL(signalMoveDiscarded()), this, SLOT(onMoveNotAccepted()));
 
+    m_pGameTimer = new QTimer();
+    m_pGameTimer->setInterval(1000);
+    m_pGameTimer->setSingleShot(false);
+    connect(m_pGameTimer, SIGNAL(timeout()), this, SLOT(onMoveTimerTimeout()));
+
+    m_pRefreshPlayersTimer = new QTimer();
+    m_pRefreshPlayersTimer->setInterval(m_refreshPlayersTimeMs);
+    m_pRefreshPlayersTimer->setSingleShot(false);
+    connect(m_pRefreshPlayersTimer, SIGNAL(timeout()), this, SLOT(onRefreshPlayersTimeout()));
 }
 
 MainWindow::~MainWindow()
@@ -88,6 +98,7 @@ void MainWindow::m_initializeLayout()
     ui->gB_AvailablePlayers->setEnabled(true);
     ui->gB_board->setEnabled(false);
     ui->pB_logout->setEnabled(true);
+    ui->lcd_time->display("0:00");
 
     m_initializeBoard();
 }
@@ -108,7 +119,8 @@ void MainWindow::m_initializeBoard()
                     item = new QTableWidgetItem();
                     tw->setItem(i, j, item);
                 }
-
+                item->setData(Qt::DecorationRole, QString(""));
+                item->setText("");
                 item->setBackgroundColor(LIGHT_FIELD_COLOR);
             }
             else
@@ -119,7 +131,8 @@ void MainWindow::m_initializeBoard()
                     item = new QTableWidgetItem();
                     tw->setItem(i, j, item);
                 }
-
+                item->setData(Qt::DecorationRole, QString(""));
+                item->setText("");
                 item->setBackgroundColor(DARK_FIELD_COLOR);
             }
         }
@@ -148,6 +161,11 @@ void MainWindow::onGameStateChanged(CGame::E_GameState newState)
         default:
             break;
     }
+}
+void MainWindow::onLogin(bool result)
+{
+    if (result)
+        m_pRefreshPlayersTimer->start();
 }
 
 void MainWindow::onGetPlayersListResponse(QList<CPlayer> availablePlayers)
@@ -220,6 +238,7 @@ void MainWindow::onGameInitialization(char playerColor)
 {
     QString text;
     QString turnText;
+    m_pRefreshPlayersTimer->stop();
     if (playerColor == (char)CGame::E_SideColor::E_BLACK)
     {
         text = "BLACK";
@@ -235,6 +254,8 @@ void MainWindow::onGameInitialization(char playerColor)
     ui->gB_AvailablePlayers->setEnabled(false);
     ui->lE_yourColor->setText(text);
     ui->lE_whoseTurn->setText(turnText);
+    m_gameTime = 0;
+    m_pGameTimer->start();
 }
 
 void MainWindow::onBoardReceived(char *board)
@@ -289,12 +310,16 @@ void MainWindow::onGameEnded(std::__cxx11::string result, std::__cxx11::string r
 {
     QMessageBox box;
 
+    ui->gB_AvailablePlayers->setEnabled(true);
+    m_pGameTimer->stop();
+    m_pRefreshPlayersTimer->start();
+
     box.setText("Player " + QString::fromStdString(result) + " won. Reason is: " + QString::fromStdString(reason));
     box.setIcon(QMessageBox::NoIcon);
     box.exec();
 
-    ui->gB_board->setEnabled(false);
-    ui->gB_AvailablePlayers->setEnabled(true);
+    ui->lcd_time->display("0:00");
+    m_initializeBoard();
 }
 
 void MainWindow::onLogout()
@@ -334,6 +359,24 @@ void MainWindow::m_startNewGame(std::__cxx11::string userName)
     CGame::GetInstance()->StartNewGame(userName);
 }
 
+void MainWindow::onMoveTimerTimeout()
+{
+    m_gameTime++;
+    int minutes = m_gameTime / 60;
+    int seconds = m_gameTime % 60;
+    QString text;
+    if (seconds >= 10)
+        text = QString::number(minutes) + ":" + QString::number(seconds);
+    else
+        text = QString::number(minutes) + ":0" + QString::number(seconds);
+
+    ui->lcd_time->display(text);
+}
+
+void MainWindow::onRefreshPlayersTimeout()
+{
+    CGame::GetInstance()->GetPlayersList();
+}
 
 void MainWindow::on_tW_availablePlayers_doubleClicked(const QModelIndex &index)
 {

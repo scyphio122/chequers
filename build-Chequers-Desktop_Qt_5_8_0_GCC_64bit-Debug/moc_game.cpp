@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CGame_t {
-    QByteArrayData data[31];
-    char stringdata0[460];
+    QByteArrayData data[33];
+    char stringdata0[527];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,33 +41,37 @@ QT_MOC_LITERAL(5, 54, 17), // "signalRedrawBoard"
 QT_MOC_LITERAL(6, 72, 12), // "signalLogout"
 QT_MOC_LITERAL(7, 85, 14), // "signalMoveMade"
 QT_MOC_LITERAL(8, 100, 19), // "signalMoveDiscarded"
-QT_MOC_LITERAL(9, 120, 15), // "onLoginResponse"
-QT_MOC_LITERAL(10, 136, 8), // "response"
-QT_MOC_LITERAL(11, 145, 26), // "onUserRegistrationResponse"
-QT_MOC_LITERAL(12, 172, 24), // "onGetPlayersListResponse"
-QT_MOC_LITERAL(13, 197, 14), // "QList<CPlayer>"
-QT_MOC_LITERAL(14, 212, 11), // "playersList"
-QT_MOC_LITERAL(15, 224, 28), // "onStartNewGameServerResponse"
-QT_MOC_LITERAL(16, 253, 6), // "result"
-QT_MOC_LITERAL(17, 260, 18), // "onNewGameRequested"
-QT_MOC_LITERAL(18, 279, 11), // "std::string"
-QT_MOC_LITERAL(19, 291, 14), // "hostPlayerName"
-QT_MOC_LITERAL(20, 306, 30), // "onNewGameRequestPlayerResponse"
-QT_MOC_LITERAL(21, 337, 20), // "onGameInitialization"
-QT_MOC_LITERAL(22, 358, 11), // "playerColor"
-QT_MOC_LITERAL(23, 370, 15), // "onBoardReceived"
-QT_MOC_LITERAL(24, 386, 5), // "char*"
-QT_MOC_LITERAL(25, 392, 5), // "board"
-QT_MOC_LITERAL(26, 398, 10), // "onYourMove"
-QT_MOC_LITERAL(27, 409, 6), // "status"
-QT_MOC_LITERAL(28, 416, 11), // "onGameEnded"
-QT_MOC_LITERAL(29, 428, 6), // "reason"
-QT_MOC_LITERAL(30, 435, 24) // "onMakeMoveServerResponse"
+QT_MOC_LITERAL(9, 120, 33), // "signalStartPlayerListRefreshT..."
+QT_MOC_LITERAL(10, 154, 32), // "signalStopPlayerListRefreshTimer"
+QT_MOC_LITERAL(11, 187, 15), // "onLoginResponse"
+QT_MOC_LITERAL(12, 203, 8), // "response"
+QT_MOC_LITERAL(13, 212, 26), // "onUserRegistrationResponse"
+QT_MOC_LITERAL(14, 239, 24), // "onGetPlayersListResponse"
+QT_MOC_LITERAL(15, 264, 14), // "QList<CPlayer>"
+QT_MOC_LITERAL(16, 279, 11), // "playersList"
+QT_MOC_LITERAL(17, 291, 28), // "onStartNewGameServerResponse"
+QT_MOC_LITERAL(18, 320, 6), // "result"
+QT_MOC_LITERAL(19, 327, 18), // "onNewGameRequested"
+QT_MOC_LITERAL(20, 346, 11), // "std::string"
+QT_MOC_LITERAL(21, 358, 14), // "hostPlayerName"
+QT_MOC_LITERAL(22, 373, 30), // "onNewGameRequestPlayerResponse"
+QT_MOC_LITERAL(23, 404, 20), // "onGameInitialization"
+QT_MOC_LITERAL(24, 425, 11), // "playerColor"
+QT_MOC_LITERAL(25, 437, 15), // "onBoardReceived"
+QT_MOC_LITERAL(26, 453, 5), // "char*"
+QT_MOC_LITERAL(27, 459, 5), // "board"
+QT_MOC_LITERAL(28, 465, 10), // "onYourMove"
+QT_MOC_LITERAL(29, 476, 6), // "status"
+QT_MOC_LITERAL(30, 483, 11), // "onGameEnded"
+QT_MOC_LITERAL(31, 495, 6), // "reason"
+QT_MOC_LITERAL(32, 502, 24) // "onMakeMoveServerResponse"
 
     },
     "CGame\0signalStateChanged\0\0CGame::E_GameState\0"
     "newState\0signalRedrawBoard\0signalLogout\0"
     "signalMoveMade\0signalMoveDiscarded\0"
+    "signalStartPlayerListRefreshTimer\0"
+    "signalStopPlayerListRefreshTimer\0"
     "onLoginResponse\0response\0"
     "onUserRegistrationResponse\0"
     "onGetPlayersListResponse\0QList<CPlayer>\0"
@@ -87,32 +91,34 @@ static const uint qt_meta_data_CGame[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   94,    2, 0x06 /* Public */,
-       5,    0,   97,    2, 0x06 /* Public */,
-       6,    0,   98,    2, 0x06 /* Public */,
-       7,    0,   99,    2, 0x06 /* Public */,
-       8,    0,  100,    2, 0x06 /* Public */,
+       1,    1,  104,    2, 0x06 /* Public */,
+       5,    0,  107,    2, 0x06 /* Public */,
+       6,    0,  108,    2, 0x06 /* Public */,
+       7,    0,  109,    2, 0x06 /* Public */,
+       8,    0,  110,    2, 0x06 /* Public */,
+       9,    0,  111,    2, 0x06 /* Public */,
+      10,    0,  112,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    1,  101,    2, 0x0a /* Public */,
-      11,    1,  104,    2, 0x0a /* Public */,
-      12,    1,  107,    2, 0x0a /* Public */,
-      15,    1,  110,    2, 0x0a /* Public */,
-      17,    1,  113,    2, 0x0a /* Public */,
-      20,    1,  116,    2, 0x0a /* Public */,
-      21,    1,  119,    2, 0x0a /* Public */,
-      23,    1,  122,    2, 0x0a /* Public */,
-      26,    1,  125,    2, 0x0a /* Public */,
-      28,    2,  128,    2, 0x0a /* Public */,
-      30,    1,  133,    2, 0x0a /* Public */,
+      11,    1,  113,    2, 0x0a /* Public */,
+      13,    1,  116,    2, 0x0a /* Public */,
+      14,    1,  119,    2, 0x0a /* Public */,
+      17,    1,  122,    2, 0x0a /* Public */,
+      19,    1,  125,    2, 0x0a /* Public */,
+      22,    1,  128,    2, 0x0a /* Public */,
+      23,    1,  131,    2, 0x0a /* Public */,
+      25,    1,  134,    2, 0x0a /* Public */,
+      28,    1,  137,    2, 0x0a /* Public */,
+      30,    2,  140,    2, 0x0a /* Public */,
+      32,    1,  145,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -120,19 +126,21 @@ static const uint qt_meta_data_CGame[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Bool,   10,
-    QMetaType::Void, QMetaType::Bool,   10,
-    QMetaType::Void, 0x80000000 | 13,   14,
-    QMetaType::Void, QMetaType::Int,   16,
-    QMetaType::Void, 0x80000000 | 18,   19,
-    QMetaType::Void, QMetaType::Int,   10,
-    QMetaType::Void, QMetaType::Char,   22,
-    QMetaType::Void, 0x80000000 | 24,   25,
-    QMetaType::Void, QMetaType::Bool,   27,
-    QMetaType::Void, 0x80000000 | 18, 0x80000000 | 18,   16,   29,
-    QMetaType::Void, QMetaType::Int,   16,
+    QMetaType::Void, QMetaType::Bool,   12,
+    QMetaType::Void, QMetaType::Bool,   12,
+    QMetaType::Void, 0x80000000 | 15,   16,
+    QMetaType::Void, QMetaType::Int,   18,
+    QMetaType::Void, 0x80000000 | 20,   21,
+    QMetaType::Void, QMetaType::Int,   12,
+    QMetaType::Void, QMetaType::Char,   24,
+    QMetaType::Void, 0x80000000 | 26,   27,
+    QMetaType::Void, QMetaType::Bool,   29,
+    QMetaType::Void, 0x80000000 | 20, 0x80000000 | 20,   18,   31,
+    QMetaType::Void, QMetaType::Int,   18,
 
        0        // eod
 };
@@ -148,17 +156,19 @@ void CGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 2: _t->signalLogout(); break;
         case 3: _t->signalMoveMade(); break;
         case 4: _t->signalMoveDiscarded(); break;
-        case 5: _t->onLoginResponse((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 6: _t->onUserRegistrationResponse((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 7: _t->onGetPlayersListResponse((*reinterpret_cast< QList<CPlayer>(*)>(_a[1]))); break;
-        case 8: _t->onStartNewGameServerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 9: _t->onNewGameRequested((*reinterpret_cast< std::string(*)>(_a[1]))); break;
-        case 10: _t->onNewGameRequestPlayerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->onGameInitialization((*reinterpret_cast< char(*)>(_a[1]))); break;
-        case 12: _t->onBoardReceived((*reinterpret_cast< char*(*)>(_a[1]))); break;
-        case 13: _t->onYourMove((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 14: _t->onGameEnded((*reinterpret_cast< std::string(*)>(_a[1])),(*reinterpret_cast< std::string(*)>(_a[2]))); break;
-        case 15: _t->onMakeMoveServerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->signalStartPlayerListRefreshTimer(); break;
+        case 6: _t->signalStopPlayerListRefreshTimer(); break;
+        case 7: _t->onLoginResponse((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 8: _t->onUserRegistrationResponse((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 9: _t->onGetPlayersListResponse((*reinterpret_cast< QList<CPlayer>(*)>(_a[1]))); break;
+        case 10: _t->onStartNewGameServerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->onNewGameRequested((*reinterpret_cast< std::string(*)>(_a[1]))); break;
+        case 12: _t->onNewGameRequestPlayerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->onGameInitialization((*reinterpret_cast< char(*)>(_a[1]))); break;
+        case 14: _t->onBoardReceived((*reinterpret_cast< char*(*)>(_a[1]))); break;
+        case 15: _t->onYourMove((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 16: _t->onGameEnded((*reinterpret_cast< std::string(*)>(_a[1])),(*reinterpret_cast< std::string(*)>(_a[2]))); break;
+        case 17: _t->onMakeMoveServerResponse((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -199,6 +209,20 @@ void CGame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
                 return;
             }
         }
+        {
+            typedef void (CGame::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CGame::signalStartPlayerListRefreshTimer)) {
+                *result = 5;
+                return;
+            }
+        }
+        {
+            typedef void (CGame::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CGame::signalStopPlayerListRefreshTimer)) {
+                *result = 6;
+                return;
+            }
+        }
     }
 }
 
@@ -227,13 +251,13 @@ int CGame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 16)
+        if (_id < 18)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 16;
+        _id -= 18;
     }
     return _id;
 }
@@ -267,6 +291,18 @@ void CGame::signalMoveMade()
 void CGame::signalMoveDiscarded()
 {
     QMetaObject::activate(this, &staticMetaObject, 4, Q_NULLPTR);
+}
+
+// SIGNAL 5
+void CGame::signalStartPlayerListRefreshTimer()
+{
+    QMetaObject::activate(this, &staticMetaObject, 5, Q_NULLPTR);
+}
+
+// SIGNAL 6
+void CGame::signalStopPlayerListRefreshTimer()
+{
+    QMetaObject::activate(this, &staticMetaObject, 6, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

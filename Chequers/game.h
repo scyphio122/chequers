@@ -78,6 +78,11 @@ signals:
     void signalMoveMade();
 
     void signalMoveDiscarded();
+
+    void signalStartPlayerListRefreshTimer();
+
+    void signalStopPlayerListRefreshTimer();
+
 public slots:
     void onLoginResponse(bool response);
 
@@ -100,8 +105,6 @@ public slots:
     void onGameEnded(std::string result, std::string reason);
 
     void onMakeMoveServerResponse(int result);
-
-    void onRefreshPlayersTimerTimeout();
 
 private:
 
@@ -137,9 +140,6 @@ private:
 
     QMutex* m_pMutex;
 
-    QTimer* m_pPlayersListRefreshTimer;
-
-    const int m_playerListRefreshTimerTimeoutMs = 1000;
 };
 
 #endif // CGAME_H

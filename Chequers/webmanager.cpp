@@ -42,6 +42,7 @@ CWebManager::~CWebManager()
     delete s_pWebMutex;
     delete m_pReceiveTimer;
     Disconnect();
+    m_networkThread->exit(0);
 }
 
 bool CWebManager::Connect(std::__cxx11::string ip)

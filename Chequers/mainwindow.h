@@ -25,6 +25,8 @@ public:
     void SetLoginForm(CLoginForm* form);
 
 public slots:
+    void onLogin(bool result);
+
     void onGetPlayersListResponse(QList<CPlayer> availablePlayers);
 
     void onStartNewGameServerResponse(int result);
@@ -62,6 +64,10 @@ private slots:
 
     void on_tW_board_itemClicked(QTableWidgetItem *item);
 
+    void onMoveTimerTimeout();
+
+    void onRefreshPlayersTimeout();
+
 private:
 
     void m_startNewGame(std::string userName);
@@ -77,6 +83,14 @@ private:
     int m_xSelected, m_ySelected;
 
     bool m_isPawnSelected = false;
+
+    QTimer* m_pGameTimer;
+
+    int m_gameTime;
+
+    QTimer* m_pRefreshPlayersTimer;
+
+    const int m_refreshPlayersTimeMs = 1000;
 };
 
 #endif // MAINWINDOW_H
