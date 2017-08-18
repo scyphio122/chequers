@@ -6,6 +6,7 @@
 #include <QList>
 #include "player.h"
 #include "logger.h"
+#include "serverconnectform.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,15 +18,12 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     CLoginForm loginForm;
-    if (!CWebManager::GetInstance()->Connect("127.0.0.1"))
-    {
-        LOG_CRITICAL("Could not connect. Aborting...");
-        exit(0);
-    }
+    CServerConnectForm connectForm;
 
+    connectForm.SetLoginForm(&loginForm);
     loginForm.SetMainWindow(&w);
     w.SetLoginForm(&loginForm);
-    loginForm.show();
+    connectForm.show();
 
 
     //CGame::GetInstance()->RegisterUser("k", "123");

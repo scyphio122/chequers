@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     player.cpp \
     loginform.cpp \
     registeruserform.cpp \
-    gamerequestpopup.cpp
+    gamerequestpopup.cpp \
+    serverconnectform.cpp
 
 HEADERS  += mainwindow.h \
     webmanager.h \
@@ -46,9 +47,11 @@ HEADERS  += mainwindow.h \
     player.h \
     loginform.h \
     registeruserform.h \
-    gamerequestpopup.h
+    gamerequestpopup.h \
+    serverconnectform.h
 
 FORMS    += mainwindow.ui \
     loginform.ui \
     registeruserform.ui \
-    gamerequestpopup.ui
+    gamerequestpopup.ui \
+    serverconnectform.ui
