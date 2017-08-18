@@ -69,6 +69,7 @@ private slots:
     void onRefreshPlayersTimeout();
 
 private:
+    bool m_checkIfPlayerListMatch(QList<CPlayer> &newList);
 
     void m_startNewGame(std::string userName);
 

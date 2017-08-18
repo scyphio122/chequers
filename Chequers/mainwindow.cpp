@@ -139,6 +139,41 @@ void MainWindow::m_initializeBoard()
     }
 }
 
+bool MainWindow::m_checkIfPlayerListMatch(QList<CPlayer>& newList)
+{
+    QTableWidget* tw = ui->tW_availablePlayers;
+    int currentListSize = tw->rowCount();
+    int matchingPairs = 0;
+
+    if (currentListSize != (newList.size() - 1))
+        return false;
+
+    for (int i=0; i<currentListSize; ++i)
+    {
+        std::string currentPlayerName = tw->item(i, 0)->text().toStdString();
+        // Search in the new list
+        for (int j=0; j<newList.size(); ++j)
+        {
+            // If came into myself - ignore
+            if (newList[j].GetPlayerName() == CGame::GetInstance()->GetUserName())
+                continue;
+
+            // If stambled upon matching username - increase counter and go to next user in current user list
+            if (newList[j].GetPlayerName() == currentPlayerName)
+            {
+                matchingPairs++;
+                break;
+            }
+        }
+    }
+
+    if (matchingPairs == tw->rowCount() &&
+        tw->rowCount() != 0)
+        return true;
+
+    return false;
+}
+
 void MainWindow::onGameStateChanged(CGame::E_GameState newState)
 {
     switch (newState)
@@ -173,6 +208,10 @@ void MainWindow::onGetPlayersListResponse(QList<CPlayer> availablePlayers)
     QTableWidget* tw = ui->tW_availablePlayers;
     QTableWidgetItem* userName;
     QTableWidgetItem* status;
+
+    // If player's list match, do nothing
+    if (m_checkIfPlayerListMatch(availablePlayers))
+        return;
 
     // Delete all the rows
     tw->clearContents();
@@ -457,3 +496,4 @@ void MainWindow::on_tW_board_itemClicked(QTableWidgetItem *item)
         return;
     }
 }
+
