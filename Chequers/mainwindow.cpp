@@ -175,7 +175,9 @@ void MainWindow::onGetPlayersListResponse(QList<CPlayer> availablePlayers)
     QTableWidgetItem* status;
 
     // Delete all the rows
+    tw->clearContents();
     tw->setRowCount(0);
+    m_availablePlayersTableWidgetRowCounter = 0;
 
     int numOfPlayers = availablePlayers.size();
     for(int i=0; i<numOfPlayers; ++i)
@@ -184,11 +186,12 @@ void MainWindow::onGetPlayersListResponse(QList<CPlayer> availablePlayers)
         if (availablePlayers[i].GetPlayerName() == CGame::GetInstance()->GetUserName())
             continue;
 
-        tw->insertRow(i);
+        tw->insertRow(m_availablePlayersTableWidgetRowCounter);
         userName = new QTableWidgetItem(QString::fromStdString(availablePlayers[i].GetPlayerName()));
         status = new QTableWidgetItem(QString::fromStdString(availablePlayers[i].GetStatusString()));
-        tw->setItem(i, 0, userName);
-        tw->setItem(i, 1, status);
+        tw->setItem(m_availablePlayersTableWidgetRowCounter, 0, userName);
+        tw->setItem(m_availablePlayersTableWidgetRowCounter, 1, status);
+        m_availablePlayersTableWidgetRowCounter++;
     }
 }
 

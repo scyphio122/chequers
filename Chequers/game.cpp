@@ -47,7 +47,7 @@ CGame::CGame()
 CGame::~CGame()
 {
     delete m_pMutex;
-    m_pThread->exit(0);
+    delete m_pThread;
 }
 
 CGame* CGame::GetInstance()

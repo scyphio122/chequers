@@ -91,6 +91,8 @@ private:
     QTimer* m_pRefreshPlayersTimer;
 
     const int m_refreshPlayersTimeMs = 1000;
+
+    int m_availablePlayersTableWidgetRowCounter;
 };
 
 #endif // MAINWINDOW_H
