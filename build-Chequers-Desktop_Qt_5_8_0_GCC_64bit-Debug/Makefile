@@ -3025,6 +3025,32 @@ serverconnectform.o: ../Chequers/serverconnectform.cpp ../Chequers/serverconnect
 		../Chequers/registeruserform.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/QPixmap \
 		ui_serverconnectform.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QVariant \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QAction \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qaction.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qapplication.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qeventloop.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qguiapplication.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qinputmethod.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QButtonGroup \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qbuttongroup.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QHeaderView \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QLabel \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qlabel.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QLineEdit \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qlineedit.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtextcursor.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qpen.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtGui/qtextoption.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/QPushButton \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../IDEs/Qt/5.8/gcc_64/include/QtWidgets/qabstractbutton.h \
 		../Chequers/webmanager.h \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/QThread \
 		../../../IDEs/Qt/5.8/gcc_64/include/QtCore/qthread.h \

@@ -302,7 +302,7 @@ void MainWindow::onGameInitialization(char playerColor)
 
 void MainWindow::onBoardReceived(char *board)
 {
-
+    (void)board;
 }
 
 void MainWindow::onRedrawRequest()
@@ -463,16 +463,16 @@ void MainWindow::on_tW_board_itemClicked(QTableWidgetItem *item)
     // Select the place to move the pawn
     if (m_isPawnSelected)
     {
-        if (item->text()[0] != (char)CGame::GetInstance()->GetSide() &&
-            item->text()[0] != CGame::GetInstance()->GetKingColor())
+        if (item->text()[0] != (char)CGame::GetInstance()->GetSideColor() &&
+            item->text()[0] != CGame::GetInstance()->GetQueenColor())
         {
             CGame::GetInstance()->MakeMove(m_xSelected, m_ySelected, item->column(), item->row());
         }
     }
 
     // Select/unselect pawn to move
-    if (item->text()[0] == (char)CGame::GetInstance()->GetSide() ||
-        item->text()[0] == CGame::GetInstance()->GetKingColor() ||
+    if (item->text()[0] == (char)CGame::GetInstance()->GetSideColor() ||
+        item->text()[0] == CGame::GetInstance()->GetQueenColor() ||
         item->text()[0] == EMPTY_FIELD)
     {
         if (item->text()[0] == EMPTY_FIELD)

@@ -61,12 +61,12 @@ char* CGame::GetBoard()
     return &m_board[0][0];
 }
 
-CGame::E_SideColor CGame::GetSide()
+CGame::E_SideColor CGame::GetSideColor()
 {
     return m_userColor;
 }
 
-char CGame::GetKingColor()
+char CGame::GetQueenColor()
 {
     if (m_userColor == CGame::E_SideColor::E_WHITE)
         return 'D';
@@ -332,6 +332,7 @@ void CGame::onBoardReceived(char *board)
 
 void CGame::onYourMove(bool status)
 {
+    (void)status;
     // TODO: TO FILL
     LOG_DBG("My move");
     m_isMyTurn = true;
