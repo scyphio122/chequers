@@ -24,7 +24,7 @@ public:
         E_BLACK = 'C'
     };
 
-    /// @enum E_GameState - enum for
+    /// @enum E_GameState - enum for game state
     enum class E_GameState : unsigned char
     {
         /** Logged out **/

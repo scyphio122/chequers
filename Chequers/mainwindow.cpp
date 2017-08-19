@@ -464,7 +464,7 @@ void MainWindow::on_tW_board_itemClicked(QTableWidgetItem *item)
     if (m_isPawnSelected)
     {
         if (item->text()[0] != (char)CGame::GetInstance()->GetSideColor() &&
-            item->text()[0] != CGame::GetInstance()->GetQueenColor())
+            item->text()[0] != CGame::GetInstance()->GetQueenCharacter())
         {
             CGame::GetInstance()->MakeMove(m_xSelected, m_ySelected, item->column(), item->row());
         }
@@ -472,7 +472,7 @@ void MainWindow::on_tW_board_itemClicked(QTableWidgetItem *item)
 
     // Select/unselect pawn to move
     if (item->text()[0] == (char)CGame::GetInstance()->GetSideColor() ||
-        item->text()[0] == CGame::GetInstance()->GetQueenColor() ||
+        item->text()[0] == CGame::GetInstance()->GetQueenCharacter() ||
         item->text()[0] == EMPTY_FIELD)
     {
         if (item->text()[0] == EMPTY_FIELD)

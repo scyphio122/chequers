@@ -66,7 +66,7 @@ CGame::E_SideColor CGame::GetSideColor()
     return m_userColor;
 }
 
-char CGame::GetQueenColor()
+char CGame::GetQueenCharacter()
 {
     if (m_userColor == CGame::E_SideColor::E_WHITE)
         return 'D';

@@ -19,7 +19,6 @@ CWebManager::CWebManager()
     m_networkThread->start();
 
     m_isConnected = false;
-    m_serverResponseTimeout = false;
     m_socketDescriptor = -1;
     s_pWebMutex = new QMutex();
 
