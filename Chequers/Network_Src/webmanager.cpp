@@ -53,6 +53,8 @@ bool CWebManager::Connect(std::__cxx11::string ip)
     }
     m_socketDescriptor = socket(AF_INET , SOCK_STREAM , 0);
 
+    LOG_DBG("Socket descriptor: %d", m_socketDescriptor);
+
     if (m_socketDescriptor == -1)
     {
         LOG_CRITICAL("Could not create socket. m_socketDescriptror: %d", m_socketDescriptor);
