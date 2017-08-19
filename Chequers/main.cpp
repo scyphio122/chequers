@@ -13,7 +13,6 @@ int main(int argc, char *argv[])
     qRegisterMetaType< QList<CPlayer> >("QList<CPlayer>");
     qRegisterMetaType< CGame::E_GameState >("CGame::E_GameState");
     qRegisterMetaType< std::string >("std::string");
-    //qRegisterMetaType< char[8][8] >("char[8][8]");
 
     QApplication a(argc, argv);
     MainWindow w;
@@ -25,9 +24,5 @@ int main(int argc, char *argv[])
     w.SetLoginForm(&loginForm);
     connectForm.show();
 
-
-    //CGame::GetInstance()->RegisterUser("k", "123");
-
-//    CGame::GetInstance()->Login("konrad", "123");
     return a.exec();
 }

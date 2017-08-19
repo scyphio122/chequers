@@ -22,36 +22,40 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH +=  Game_Src\
+                GUI_Forms\
+                Network_Src\
+                Utils
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    webmanager.cpp \
-    logger.cpp \
-    lock.cpp \
-    webprotocolframe.cpp \
-    game.cpp \
-    protocolframeparser.cpp \
-    player.cpp \
-    loginform.cpp \
-    registeruserform.cpp \
-    gamerequestpopup.cpp \
-    serverconnectform.cpp
+        GUI_Forms/mainwindow.cpp\
+        GUI_Forms/loginform.cpp\
+        GUI_Forms/registeruserform.cpp\
+        GUI_Forms/serverconnectform.cpp\
+        GUI_Forms/gamerequestpopup.cpp\
+        Network_Src/webmanager.cpp\
+        Game_Src/webprotocolframe.cpp\
+        Game_Src/game.cpp\
+        Game_Src/protocolframeparser.cpp\
+        Game_Src/player.cpp\
+        Utils/logger.cpp\
+        Utils/lock.cpp
 
-HEADERS  += mainwindow.h \
-    webmanager.h \
-    logger.h \
-    lock.h \
-    webprotocolframe.h \
-    game.h \
-    protocolframeparser.h \
-    player.h \
-    loginform.h \
-    registeruserform.h \
-    gamerequestpopup.h \
-    serverconnectform.h
+HEADERS  +=  GUI_Forms/mainwindow.h\
+        GUI_Forms/loginform.h\
+        GUI_Forms/registeruserform.h\
+        GUI_Forms/serverconnectform.h\
+        GUI_Forms/gamerequestpopup.h\
+        Network_Src/webmanager.h\
+        Game_Src/webprotocolframe.h\
+        Game_Src/game.h\
+        Game_Src/protocolframeparser.h\
+        Game_Src/player.h\
+        Utils/logger.h\
+        Utils/lock.h
 
-FORMS    += mainwindow.ui \
-    loginform.ui \
-    registeruserform.ui \
-    gamerequestpopup.ui \
-    serverconnectform.ui
+FORMS    +=  GUI_Forms/mainwindow.ui\
+    GUI_Forms/loginform.ui\
+    GUI_Forms/registeruserform.ui\
+    GUI_Forms/gamerequestpopup.ui\
+    GUI_Forms/serverconnectform.ui
